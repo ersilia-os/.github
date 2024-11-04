@@ -1,7 +1,7 @@
 ## 🦠 Welcome to Ersilia 💊
 
 * 🙋‍ The [Ersilia Open Source Initiative](https://ersilia.io) is a **non-profit organization** dedicated to promoting open-source science and fostering a collaborative community.
-* 🌍 Our mission is to [**equip laboratories in the Global South**](https://ersilia.io/projects) with machine learning and data science tools for drug discovery, empowering them to address local and global health challenges.
+* 🌍 Our mission is to [equip laboratories in the Global South](https://ersilia.io/projects) with machine learning and data science tools for drug discovery, empowering them to address **local and global health challenges**.
 * 🧙 Browse the [Ersilia Model Hub](https://ersilia.io/model-hub), our repository of **pre-trained machine learning models**!
 * 📚 Visit more extensive **documentation** in the [Ersilia Book](https://ersilia.gitbook.io/ersilia-book/).
 
