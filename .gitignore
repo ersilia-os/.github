@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# Rebuildable single-file copy of index.html with the data inlined, only needed
+# for publishing as a Claude Artifact: python scripts/build.py --artifact
+repository-browser/dist/

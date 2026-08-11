@@ -1,0 +1,58 @@
+# Publishes repository-browser/ to GitHub Pages.
+#
+# There is no build step: the app is static HTML with its data in a same-origin
+# .js file, so the directory is uploaded as-is. index.html is generated from
+# src/index.src.html by scripts/build.py and committed, so a contributor without
+# the html-formatting skill installed can still change copy or data.
+#
+# Note the path: this repository IS named `.github`, so its own workflows live at
+# `.github/workflows/` inside it. That is normal — a workflow here applies only to
+# this repository. Org-wide workflow templates would have to live in
+# `workflow-templates/`, which this repository does not have.
+name: Deploy repository browser to Pages
+
+on:
+  push:
+    branches: [main]
+    # Only the app matters; editing profile/README.md should not redeploy.
+    paths:
+      - "repository-browser/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# A newer push supersedes an in-flight deploy rather than queueing behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail if the built page is missing its data
+        # index.html loads data/repositories.js relatively; if either is absent the
+        # site deploys to a blank table. Cheaper to catch here than in a browser.
+        run: |
+          test -f repository-browser/index.html
+          test -f repository-browser/data/repositories.js
+          grep -q 'window.ERSILIA_REPOS' repository-browser/data/repositories.js
+          grep -q 'src="data/repositories.js"' repository-browser/index.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: repository-browser
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
