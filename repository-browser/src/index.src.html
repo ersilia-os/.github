@@ -1,0 +1,1300 @@
+<!-- Source for index.html. Rebuild with:
+       python scripts/build.py            (and --artifact for the single-file build)
+     which runs the html-formatting skill's apply_theme.py in retrofit mode: the canonical
+     Ersilia head (ersilia.css inlined + the SVG target favicon) is swapped in, and the style
+     block below is hoisted to cascade after the theme. Edit this file, not index.html.
+
+     Do not write literal HTML tag names in this comment: the assembler hoists styles with a
+     regex, so a stray opening style tag here would swallow everything up to the real one. -->
+
+<style>
+/* ---------------------------------------------------------------------------
+   A repository search engine. One view: a search field, and ranked results.
+
+   Every colour comes from an ersilia.css token via var()/color-mix() — there is
+   no literal colour anywhere below. Periwinkle (--brand) carries interaction;
+   the badges carry the two data encodings (see below).
+
+   TYPE AND SPACING ARE SCALES, NOT GUESSES. Both are declared as tokens here so
+   the next edit picks a step instead of inventing one. Before this pass the page
+   had nine font sizes inside an 11px range (12 / 12.5 / 13 all doing row text)
+   and 23 distinct spacing values, only six of which sat on a grid.
+
+   Chrome recedes: hairline rules, no drop shadows, three greys, and weight only
+   where it means something.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Type — five steps. The input is now one size in BOTH header states, which
+     retired the sixth step; holding a step nothing uses is how a scale rots. */
+  --fs-1: 11px;   /* badges, column headers, kbd, counts, eyebrow */
+  --fs-2: 12px;   /* project + date cells, context, hints, sort note, footer */
+  --fs-3: 13px;   /* the row itself: slug and title; the lede; body copy */
+  --fs-4: 15px;   /* the search input; empty-state and dialog headings */
+  --fs-5: 28px;   /* the hero heading */
+
+  /* Spacing — a 4/8 grid. Nothing below is off it. */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+}
+
+/* Three theme components sit half a pixel and half a weight off this scale —
+   the eyebrow at 11.5/600, the filter chips at 11.5/450, and dialog headings at
+   600. Joining them to the scale is the whole point of having one. */
+.eyebrow { font-size: var(--fs-1); font-weight: 500; }
+.chip { font-size: var(--fs-1); font-weight: 500; }
+dialog.modal h2, dialog.modal h3 { font-weight: 500; }
+
+/* --- Badges: two encodings, doing two different jobs -------------------
+   Status is SEMANTIC — planned, active, done, paused, and the two deliberate
+   endings in neutral grey. Archived is never red: closing a research repository
+   down is a normal ending, not a failure. The only red on this page is the
+   `private` marker.
+
+   Type is CATEGORICAL — one hue per kind of work, which is the palette doing
+   real work rather than decoration. Crimson is deliberately absent from the
+   type set so no repository type can read as a warning. Every badge also carries
+   its own text label, so colour is a redundant channel here, never the only one.
+   ----------------------------------------------------------------------- */
+.s-todo         { --sc: var(--cobalt); }
+.s-in-progress  { --sc: var(--brand); }
+.s-completed    { --sc: var(--good); }
+.s-idle         { --sc: var(--amber); }
+/* Deeper greys than --egray/--faint: at badge tint those washed out to nothing. */
+.s-archived     { --sc: var(--silver); }
+.s-discontinued { --sc: var(--muted); }
+
+/* Type and status are independent encodings, and 13 categories cannot all be
+   mutually distinct in one palette. The priority is separation WITHIN the type
+   column — "analysis or package?" is the distinction a reader actually makes —
+   so the two dominant types take the two most separated hues. Resemblance
+   ACROSS columns (Analysis green near Completed green) is harmless: the columns
+   mean different things and every badge carries its own label. */
+.t-analysis      { --c: var(--lime); }        /* 71 */
+.t-package       { --c: var(--cobalt); }      /* 71 */
+.t-automation    { --c: var(--tangerine); }   /* 13 */
+.t-app           { --c: var(--orchid); }      /* 11 */
+.t-workshop      { --c: var(--amber); }       /* 11 */
+.t-template      { --c: var(--turquoise); }   /*  5 */
+.t-documentation { --c: var(--fuchsia); }     /*  3 */
+
+/* Sans, not the theme's mono: a category label is not an identifier, and at 10px
+   monospace the seven hues read as techy noise. This is also what makes the
+   house rule true rather than aspirational — after this, mono means exactly four
+   things on the page: slugs, dates, counts and filter tokens.
+   The 32/80/50 mix is stronger than the theme's 20/72/34; at that tint seven
+   hues still resolve to one pale wash. */
+.badge { font-family: var(--sans); font-size: var(--fs-1); font-weight: 500;
+         letter-spacing: 0; padding: 2px var(--s2);
+         background: color-mix(in srgb, var(--c, var(--brand)) 32%, #fff);
+         color: color-mix(in srgb, var(--c, var(--brand)) 80%, #000);
+         border-color: color-mix(in srgb, var(--c, var(--brand)) 50%, #fff); }
+/* The overflow marker for a repository carrying two labels — kept narrow so it
+   never pushes the real badge out of its column. */
+.badge.more { --c: var(--faint); padding: 2px 6px; }
+/* Outlined rather than filled: a red fill made Private the loudest thing in the
+   table. Outlined, it reads as a marker instead of an alert. The hue comes from
+   --c so the same treatment serves Public in the filter panel. */
+.badge.ghost { background: transparent;
+               color: color-mix(in srgb, var(--c, var(--bad)) 75%, #000);
+               border-color: color-mix(in srgb, var(--c, var(--bad)) 45%, var(--surface)); }
+.g-private { --c: var(--bad); }
+.g-public  { --c: var(--cobalt); }
+
+/* --- Page column -------------------------------------------------------
+   Wide enough for six columns, but the hero does not widen with it: the search
+   field stays at a readable 640px and is centred over a full-width table. That
+   contrast is the composition. */
+.page { max-width: 1240px; margin: 0 auto; padding: 0 var(--s5) var(--s8);
+        min-height: 100vh; display: flex; flex-direction: column; }
+
+/* --- Hero ----------------------------------------------------------------
+   Left-aligned to the table's own edge, and the field spans the same full
+   measure. The previous hero was a centred 640px stack above a 1240px table —
+   it never belonged to the page, and no amount of margin tuning fixed that,
+   because the problem was alignment rather than spacing. */
+.hero { padding: var(--s7) 0 var(--s5); }
+.hero .eyebrow { display: block; margin-bottom: var(--s3); }
+.hero .wordmark { font-size: var(--fs-5); font-weight: 600; margin: 0;
+                  letter-spacing: -.015em; }
+/* The line under the heading points at the rest of the ecosystem rather than
+   restating figures that are already in the field and the footer. */
+.hero .ecolinks { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4);
+                  margin: var(--s3) 0 0; font-size: var(--fs-3); }
+
+/* --- Search dock ---------------------------------------------------------
+   Sticky, so the field itself becomes the slim bar once the hero scrolls past.
+   One element rather than a second, duplicated input, which also means there is
+   no second query state to keep in sync. */
+.searchdock { position: sticky; top: 0; z-index: 30; background: var(--bg);
+              padding: var(--s2) 0; display: flex; align-items: center; gap: var(--s2); }
+.searchdock.is-stuck { border-bottom: 1px solid var(--border); }
+.searchdock .searchbox { flex: 1; min-width: 0; }
+/* The native select arrow is drawn by the browser inside its own padding box,
+   so it cannot be spaced properly — it always sits cramped against the edge.
+   appearance:none removes it and the wrapper draws a chevron from two rotated
+   borders instead: crisp at any zoom, and coloured from a token rather than a
+   baked-in SVG fill.
+   align-self:stretch only applies when the cross size is auto, which is why
+   there is no height here — a height:100% would resolve against an indefinite
+   parent and leave a 29px select beside a 44px field. */
+.selectwrap { position: relative; display: flex; flex: none; width: 200px;
+              align-self: stretch; }
+.selectwrap select {
+  appearance: none; -webkit-appearance: none;
+  width: 100%; padding: 0 var(--s6) 0 var(--s3);
+  font-family: var(--sans); font-size: var(--fs-3); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); cursor: pointer;
+  transition: border-color var(--tap), box-shadow var(--tap);
+}
+.selectwrap select:hover { border-color: color-mix(in srgb, var(--brand) 40%, var(--border)); }
+.selectwrap select:focus-visible { outline: none; border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent); }
+.selectwrap::after {
+  content: ""; position: absolute; right: var(--s3); top: 50%;
+  width: 7px; height: 7px; margin-top: -5px; pointer-events: none;
+  border-right: 1.5px solid var(--faint); border-bottom: 1.5px solid var(--faint);
+  border-radius: 1px; transform: rotate(45deg);
+  transition: border-color var(--tap);
+}
+.selectwrap:hover::after, .selectwrap:focus-within::after { border-color: var(--brand); }
+
+/* --- Search field ------------------------------------------------------
+   A hairline box, not a floating one. The theme's --shadow is a 30px plum drop
+   shadow that makes the field hover over an otherwise flat page; the whole
+   direction here is that chrome recedes. Focus is the only lift. */
+.searchbox { display: flex; align-items: center; gap: var(--s3);
+             background: var(--surface); border: 1px solid var(--border);
+             border-radius: var(--radius-sm); padding: 0 var(--s3) 0 var(--s4);
+             box-shadow: var(--shadow-sm);
+             transition: border-color var(--tap), box-shadow var(--tap), padding var(--tap); }
+.searchbox:focus-within { border-color: var(--brand);
+                          box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent); }
+/* A hairline magnifier, not the Ersilia target: at this size the plum-and-red
+   bullseye reads as a dark blob. The target mark belongs on the favicon. */
+.searchbox .mark { flex: none; width: 19px; height: 19px; display: block;
+                   fill: none; stroke: var(--faint); stroke-width: 1.7;
+                   stroke-linecap: round; transition: stroke var(--tap); }
+.searchbox:focus-within .mark { stroke: var(--brand); }
+
+#q { flex: 1; min-width: 0; font-family: var(--sans); font-size: var(--fs-4);
+     font-weight: 400; color: var(--ink); background: none; border: none;
+     border-radius: 0; padding: var(--s3) 0; }
+/* The live count sits in the field, so the pinned bar carries it too without a
+   second element that would have to be kept in sync. */
+.scount { flex: none; font-size: var(--fs-2); color: var(--faint); white-space: nowrap; }
+.scount strong { font-family: var(--mono); font-weight: 500; color: var(--muted); }
+#q::placeholder { color: var(--faint); }
+#q:focus { outline: none; }
+/* The native search affordance is a second, unstyled clear button. */
+#q::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+.kbd { flex: none; font-family: var(--mono); font-size: var(--fs-1); color: var(--faint);
+       background: var(--surface-2); border: 1px solid var(--border);
+       border-radius: var(--radius-sm); padding: var(--s1) var(--s2); }
+.searchbox:focus-within .kbd { opacity: 0; }
+.clearq { flex: none; border: none; background: none; color: var(--faint);
+          font-size: var(--fs-4); line-height: 1; padding: var(--s1) var(--s2);
+          border-radius: 999px; }
+.clearq:hover { background: var(--surface-2); color: var(--ink); }
+
+.context .n { font-family: var(--mono); color: var(--muted); }
+
+/* --- Controls ------------------------------------------------------------
+   Inset by the table's own border + cell padding, so the filter labels line up
+   with the "Repository" column header rather than sitting a few pixels off it. */
+.controls { padding: var(--s4) 0 var(--s3) 13px; }
+
+.filterhint { margin: var(--s3) 0 0; font-size: var(--fs-2); color: var(--muted); }
+.filterhint[hidden] { display: none; }
+.filterhint strong { font-family: var(--mono); font-weight: 500; color: var(--ink); }
+.filterhint button { font-size: var(--fs-2); padding: var(--s1) var(--s3);
+                     margin-left: var(--s2); }
+
+/* The sort note describes the table, so it sits on the last filter row, right
+   above the table's own sort arrow, rather than in a band of its own. */
+.sortnote { margin-left: auto; font-size: var(--fs-2); color: var(--faint);
+            display: inline-flex; align-items: center; gap: var(--s2); }
+.sortnote button { font-size: var(--fs-2); padding: var(--s1) var(--s3); }
+
+/* --- Filters panel, collapsed by default -------------------------------- */
+/* :not([hidden]) matters — a display value on the bare rule outranks the UA's
+   [hidden]{display:none} and the panel can never close. */
+/* Always visible, and compact enough to earn it: three labelled rows of 11px
+   chips. No toggle button, so the filters and their counts are simply part of
+   the page rather than something to go and find. */
+.filters { display: grid; gap: var(--s2); }
+.fgroup { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); }
+/* Same treatment as a table column header, because that is what these are: the
+   label of a column, standing above the values it filters. */
+.flabel { flex: 0 0 66px; font-size: var(--fs-1); font-weight: 500;
+          letter-spacing: .02em; color: var(--muted); }
+.chipwrap { display: flex; flex-wrap: wrap; gap: var(--s1); }
+.chip { transition: background var(--tap), border-color var(--tap), color var(--tap); }
+.chip .n { font-family: var(--mono); color: currentColor; opacity: .6; }
+.chip[disabled] { opacity: .4; cursor: not-allowed; }
+
+/* Chips are inclusion toggles: OFF is grey, ON carries the exact colour of the
+   badge it enables — the same 32/50/80 mixes as .badge, so a chip and its badge
+   are indistinguishable in format. Colour therefore means "enabled", and the
+   panel reads at a glance as which slice of the registry you are looking at.
+   Status chips take their hue from --sc (set by the .s-* class); type chips
+   already carry --c from their .t-* class, so this must NOT reassign --c for
+   them or all seven collapse to the fallback. */
+.chip[data-facet="status"] { --c: var(--sc, var(--brand)); }
+/* --faint, not --muted: an off chip has to read as clearly recessed next to an
+   enabled neutral one (Public has no badge hue, so its enabled state is grey
+   too, and the two must not be confusable). */
+.chip[data-facet] { background: var(--surface-2); border-color: transparent;
+                    color: var(--faint); }
+.chip[data-facet][aria-pressed="true"] {
+  background: color-mix(in srgb, var(--c, var(--muted)) 32%, #fff);
+  border-color: color-mix(in srgb, var(--c, var(--muted)) 50%, #fff);
+  color: color-mix(in srgb, var(--c, var(--muted)) 80%, #000);
+}
+/* The visibility pair is outlined rather than filled — Private red, Public blue —
+   matching how Private is drawn in the table itself. */
+.chip.ghost[aria-pressed="true"] { background: transparent;
+  color: color-mix(in srgb, var(--c) 75%, #000);
+  border-color: color-mix(in srgb, var(--c) 45%, var(--surface)); }
+
+/* --- The results table --------------------------------------------------
+   One <tr> per repository, one line each. Cell backgrounds and borders, never
+   row ones: a background on a <tr> is overpainted by its own cells and
+   box-shadow on a row does not render at all.
+
+   No overflow container on desktop: an ancestor with overflow:auto becomes the
+   scroll box for position:sticky, which silently stops the column headers from
+   pinning to the viewport. The columns are percentages so nothing overflows
+   here; only the mobile rule below turns scrolling on. */
+/* The frame is the table's own wrapper now that the controls sit above it.
+   NO overflow here on desktop: an ancestor with overflow becomes the scroll box
+   for position:sticky and silently stops the column headers pinning — that has
+   already caught this page once. The rounded corners are therefore made by the
+   corner CELLS carrying matching radii, not by clipping. */
+.tablewrap { overflow-x: visible; border: 1px solid var(--border);
+             border-radius: var(--radius); background: var(--surface); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
+           clip: rect(0 0 0 0); white-space: nowrap; }
+/* Fixed layout with declared column widths: with auto layout the longest slug
+   and the widest title fight over the space and push Created off the edge. */
+#hits { width: 100%; border-collapse: collapse; table-layout: fixed; }
+/* Widths sum to 100 and are sized to their content: Created must fit a whole
+   ISO date in mono, and Type/Status must fit their widest badge plus a "+1". */
+#hits col.w-repo { width: 28%; }
+#hits col.w-title { width: 27%; }
+#hits col.w-type { width: 12%; }
+#hits col.w-status { width: 12%; }
+#hits col.w-project { width: 11%; }
+#hits col.w-created { width: 10%; }
+
+#hits thead th { position: sticky; top: var(--headh, 0px); z-index: 5;
+                 background: var(--surface); font-family: var(--sans); font-size: var(--fs-1);
+                 font-weight: 500; letter-spacing: .02em; color: var(--muted);
+                 text-align: left; white-space: nowrap; padding: 0;
+                 border-bottom: 1px solid var(--border); }
+#hits thead th button { width: 100%; font: inherit; letter-spacing: inherit;
+                        color: inherit; background: none; border: none;
+                        border-radius: 0; text-align: inherit;
+                        padding: var(--s2) var(--s3); cursor: pointer; }
+#hits thead th button:hover { color: var(--brand); background: none; }
+#hits thead th.num button { text-align: right; }
+#hits thead .arrow { color: var(--brand); }
+
+/* Strictly one line per repository, separated by hairlines rather than stripes.
+   The cells take an explicit --surface background for two reasons: the table
+   carries class="data", so the THEME's own tr:nth-child(even) stripe is live
+   underneath and would reappear the moment a page-level stripe is removed; and
+   it gives the table a clean white slab against the --bg page.
+   All three states paint the cells — a background on a <tr> is overpainted by
+   its own cells — and equal-specificity rules mean the later one wins, so the
+   order here is load-bearing: base, hover, selected. */
+.hit { cursor: pointer; }
+.hit.private { cursor: default; }
+/* Keyboard navigation scrolls rows into view; without this the row lands under
+   the pinned header and its column headers. */
+.hit { scroll-margin-top: calc(var(--headh, 0px) + 44px); scroll-margin-bottom: var(--s5); }
+/* position:relative so the visually-hidden description span inside the title
+   cell is contained here. Absolutely-positioned descendants take the nearest
+   POSITIONED ancestor as their containing block, so without this they resolve
+   against the viewport, escape the table's horizontal scroll clipping, and drag
+   a phantom 300px of page width with them at narrow viewports. */
+.hit > td { padding: var(--s2) var(--s3); vertical-align: middle; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; position: relative;
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            border-left: 2px solid transparent; transition: background var(--tap); }
+.hit > td + td { border-left: none; }
+.hit:hover > td { background: color-mix(in srgb, var(--brand) 5%, var(--surface)); }
+.hit.sel > td { background: color-mix(in srgb, var(--brand) 10%, var(--surface)); }
+.hit.sel > td:first-child { border-left-color: var(--brand); }
+/* The frame's rounded corners, made by the corner cells rather than by clipping
+   the container — see the overflow/sticky note above. The last row also drops
+   its rule so it does not double with the frame's own border. */
+#hits tbody tr.hit:last-child > td { border-bottom: none; }
+#hits tbody tr.hit:last-child > td:first-child { border-bottom-left-radius: var(--radius); }
+#hits tbody tr.hit:last-child > td:last-child { border-bottom-right-radius: var(--radius); }
+
+/* The identifier leads: it is what you searched for and what you will type
+   again. The title sits beside it, same size, lighter, greyer. */
+.c-repo { font-family: var(--mono); font-size: var(--fs-3); font-weight: 500;
+          color: var(--ink); }
+.c-repo a { color: inherit; text-decoration: none; }
+.c-repo .nolink { color: var(--muted); }
+.c-repo .badge { margin-left: var(--s2); }
+/* Link colour and the external-link arrow are hover/focus only. At rest, 180
+   rows would otherwise be 180 coloured identifiers and 180 arrows of noise.
+   The arrow fades rather than appears, so nothing shifts. */
+.c-repo .arr { color: var(--faint); opacity: 0; transition: opacity var(--tap); }
+.hit:hover .c-repo a, .c-repo a:focus-visible { color: var(--brand); }
+.hit:hover .c-repo .arr, .c-repo a:focus-visible .arr { opacity: 1; }
+
+.c-title { font-size: var(--fs-3); font-weight: 400; color: var(--muted); }
+.c-type .badge + .badge, .c-status .badge + .badge { margin-left: var(--s1); }
+.c-project, .c-created { font-size: var(--fs-2); color: var(--faint); }
+.c-created { font-family: var(--mono); font-variant-numeric: tabular-nums;
+             text-align: right; }
+
+/* --- Hover card ---------------------------------------------------------
+   Carries what the row cannot: the description, every type and status rather
+   than the first plus a "+1", and all linked projects. One reused node, not one
+   per row. Above the sticky column headers (5) and the page header (20). */
+.hovercard { position: fixed; inset-inline-start: 0; inset-block-start: 0;
+             z-index: 60; width: 380px; max-width: calc(100vw - 32px);
+             background: var(--surface); border: 1px solid var(--border);
+             border-radius: var(--radius); box-shadow: var(--shadow);
+             padding: var(--s4); pointer-events: none;
+             opacity: 0; transform: translateY(2px);
+             transition: opacity var(--tap), transform var(--tap); }
+.hovercard[data-show="1"] { opacity: 1; transform: none; }
+.hovercard .hc-slug { font-family: var(--mono); font-size: var(--fs-2); color: var(--brand);
+                      display: block; word-break: break-all; }
+.hovercard .hc-title { font-size: var(--fs-3); font-weight: 500; color: var(--ink);
+                       margin: var(--s1) 0 0; }
+.hovercard .hc-desc { font-size: var(--fs-2); line-height: 1.55; color: var(--muted);
+                      margin: var(--s2) 0 0; }
+.hovercard .hc-badges { display: flex; flex-wrap: wrap; gap: var(--s1); margin-top: var(--s3); }
+.hovercard dl { display: grid; grid-template-columns: 62px 1fr; gap: var(--s1) var(--s3);
+                margin: var(--s3) 0 0; font-size: var(--fs-2); }
+.hovercard dt { color: var(--faint); }
+.hovercard dd { margin: 0; color: var(--muted); }
+.hovercard .hc-foot { display: flex; align-items: baseline; gap: var(--s2);
+                      margin-top: var(--s3); padding-top: var(--s2);
+                      border-top: 1px solid var(--border);
+                      font-size: var(--fs-1); color: var(--faint); }
+.hovercard .hc-url { font-family: var(--mono); overflow: hidden;
+                     text-overflow: ellipsis; white-space: nowrap; }
+.hovercard .hc-key { margin-left: auto; white-space: nowrap; }
+
+/* Match highlighting: a periwinkle tint, never the browser's yellow. */
+mark { background: color-mix(in srgb, var(--brand) 15%, transparent);
+       color: inherit; border-radius: var(--s1); padding: 0 2px; }
+
+/* --- Empty state --------------------------------------------------------- */
+.empty { padding: var(--s8) var(--s5); text-align: center; }
+.empty h2 { font-size: var(--fs-4); font-weight: 500; margin: 0 0 var(--s2); }
+.empty p { font-size: var(--fs-3); color: var(--muted); margin: 0 0 var(--s4); }
+
+/* --- Footer -------------------------------------------------------------- */
+/* The last theme component off the scale: .credit is 11.5px with 450 links. */
+.credit { font-size: var(--fs-2); }
+.credit a { font-weight: 500; }
+.page > .credit { padding-top: var(--s5); }
+.credit .linkish { font-size: inherit; }
+.credit .linkish { border: none; background: none; padding: 0; font-size: inherit;
+                   font-weight: 500; color: var(--brand); }
+.credit .linkish:hover { background: none; text-decoration: underline; }
+
+/* --- Dialog ------------------------------------------------------------- */
+/* ersilia.css centres .modal with top/left 50% + a translate, which fights the
+   native dialog box (inset:0 + margin:auto) and pushes the header off-screen.
+   display goes on [open] only: a display value on the base rule outranks the
+   UA's dialog:not([open]){display:none} and leaves the dialog always on screen. */
+dialog.modal { position: fixed; inset: 0; margin: auto; transform: none;
+               border: 1px solid var(--border); overflow: hidden; }
+dialog.modal[open] { display: flex; flex-direction: column; }
+dialog.modal::backdrop { background: color-mix(in srgb, var(--ink) 34%, transparent); }
+dialog.modal .mbody { overflow: auto; min-height: 0; }
+dialog.modal h2 { font-size: var(--fs-4); margin: 0 0 var(--s1); }
+dialog.modal .close { position: absolute; top: var(--s4); right: var(--s4); z-index: 1; }
+
+/* --- Entry motion, and the opt-out -------------------------------------
+   One fade on the container, not a staggered per-row animation: transform on a
+   table row is not honoured across engines, and 180 staggered rows would be
+   noise rather than polish. */
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+#hits tbody { animation: fadein .16s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  #hits tbody { animation: none; }
+  .searchbox, #q, .hit > td, .c-repo .arr, .chip,
+  .hovercard { transition: none; }
+}
+
+/* --- Responsive ----------------------------------------------------------
+   The table keeps all six columns and scrolls inside .tablewrap, so the page
+   body never scrolls sideways at any width. */
+/* Tablet: the two least load-bearing columns go before anything has to shrink
+   or scroll. Project and Created are both available in the hover card and, on a
+   narrow screen, in the stacked card below. */
+@media (max-width: 1080px) {
+  #hits col.w-repo { width: 32%; }
+  #hits col.w-title { width: 36%; }
+  #hits col.w-type { width: 15%; }
+  #hits col.w-status { width: 17%; }
+  #hits col.w-project, #hits col.w-created { width: 0; }
+  .c-project, .c-created, #hits thead th[data-col="project"],
+  #hits thead th[data-col="created"] { display: none; }
+}
+
+/* Phone: a table with six columns cannot be made narrow, so it stops being a
+   table. Each repository becomes its own card — genuinely responsive rather
+   than a 1700px table dragged sideways under a finger. */
+@media (max-width: 760px) {
+  .page { padding: 0 var(--s4) var(--s7); }
+  /* The heading keeps its size and simply wraps — a hero heading on two lines is
+     normal, and inventing a phone-only size would put a step off the scale. */
+  .hero { padding: var(--s5) 0 var(--s4); }
+  .kbd { display: none; }
+  .flabel { flex-basis: 100%; }
+  /* Side by side, a 200px select leaves the field too narrow to read a query in. */
+  .searchdock { flex-direction: column; align-items: stretch; }
+  .selectwrap { width: 100%; }
+  .selectwrap select { padding-block: var(--s3); }
+  .controls { padding-left: 0; }
+  .sortnote { margin-left: 0; }
+
+  .tablewrap { border: none; background: none; border-radius: 0; }
+  #hits, #hits tbody, #hits td { display: block; }
+  #hits colgroup, #hits thead { display: none; }
+  /* The card is a wrapping flex row: name and title claim a full line each, the
+     badges and metadata flow and wrap after them. */
+  #hits tr.hit { display: flex; flex-wrap: wrap; align-items: center;
+                 gap: var(--s1) var(--s2);
+                 border: 1px solid var(--border); border-radius: var(--radius);
+                 background: var(--surface); padding: var(--s3);
+                 margin-bottom: var(--s2); }
+  /* Needs the id: the theme's own `table.data td` border-bottom outranks a
+     plain `.hit > td`, and would draw a rule between every line of the card. */
+  /* 0 1 auto, not 0 0 auto: with shrink disabled a long project name sits at its
+     max-content width and pushes the whole card past the viewport. */
+  #hits .hit > td { flex: 0 1 auto; min-width: 0; border: none; background: none;
+                    padding: 0; white-space: normal; overflow: visible;
+                    text-overflow: clip; border-radius: 0; }
+  #hits .hit > .c-repo, #hits .hit > .c-title { flex: 1 0 100%; }
+  #hits .hit.sel { border-color: var(--brand); }
+  #hits .hit.sel > td, #hits .hit:hover > td { background: none; }
+  /* Restore the columns the tablet width hid — in a card there is room. */
+  .c-project, .c-created { display: inline-block; text-align: left; }
+  /* No hover on touch, so a hover-revealed arrow would never appear. */
+  .c-repo .arr { opacity: 1; }
+}
+</style>
+
+<div class="page">
+  <header class="hero">
+    <span class="eyebrow">Ersilia Open Source Initiative</span>
+    <h1 class="wordmark">Search repositories in the Ersilia <em>ecosystem</em></h1>
+    <nav class="ecolinks">
+      <a href="https://github.com/ersilia-os" target="_blank" rel="noopener">GitHub Profile ↗</a>
+      <a href="https://catalog.ersilia.io" target="_blank" rel="noopener">Model Catalog ↗</a>
+      <a href="https://ersilia.io" target="_blank" rel="noopener">Ersilia Website ↗</a>
+    </nav>
+  </header>
+
+  <!-- Sticky: as the hero scrolls away this becomes the slim pinned bar. It is
+       the SAME field, not a second one, so there is no duplicate query state. -->
+  <div class="searchdock" id="searchdock">
+    <form class="searchbox" id="searchbox" role="search" autocomplete="off">
+      <svg class="mark" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="8.75" cy="8.75" r="5.75"></circle>
+        <line x1="13.1" y1="13.1" x2="17.2" y2="17.2"></line>
+      </svg>
+      <label class="sr-only" for="q">Search repositories</label>
+      <input id="q" type="search" placeholder="Name, title, project, type…"
+             spellcheck="false" aria-controls="hits" aria-describedby="count">
+      <span class="scount" id="count"></span>
+      <button class="clearq" id="clearq" type="button" title="Clear search" hidden>×</button>
+      <kbd class="kbd">⌘K</kbd>
+    </form>
+    <!-- Project is a scope, not a facet: it narrows what you are searching
+         rather than describing a result, so it belongs beside the query. -->
+    <label class="sr-only" for="f-project">Project</label>
+    <div class="selectwrap"><select id="f-project"></select></div>
+  </div>
+
+  <!-- Groups run in the table's own column order: Type, then Status. -->
+  <div class="controls">
+    <div class="filters" id="filters">
+      <div class="fgroup"><span class="flabel">Type</span><span class="chipwrap" id="f-type"></span></div>
+      <div class="fgroup"><span class="flabel">Status</span><span class="chipwrap" id="f-status"></span></div>
+      <div class="fgroup"><span class="flabel">Visibility</span><span class="chipwrap" id="f-is"></span>
+        <span class="sortnote" id="sortnote"></span></div>
+    </div>
+    <!-- Because filters are on by default, a search can match something that is
+         currently hidden. This says so rather than letting it look like a dead end. -->
+    <p class="filterhint" id="filterhint" hidden></p>
+  </div>
+
+  <main id="results">
+    <div class="tablewrap">
+      <table class="data" id="hits">
+        <colgroup>
+          <col class="w-repo"><col class="w-title"><col class="w-type">
+          <col class="w-status"><col class="w-project"><col class="w-created">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-col="name"><button type="button">Repository</button></th>
+            <th data-col="title"><button type="button">Title</button></th>
+            <th data-col="type"><button type="button">Type</button></th>
+            <th data-col="status"><button type="button">Status</button></th>
+            <th data-col="project"><button type="button">Project</button></th>
+            <th data-col="created" class="num"><button type="button">Created</button></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden></div>
+  </main>
+
+  <footer class="credit">
+    <span class="context" id="context"></span>
+    · <button class="linkish" id="about-open" type="button">About this data</button><br>
+    Brought to you by the <a href="https://ersilia.io" target="_blank" rel="noopener">Ersilia Open Source Initiative</a>
+    — a tech-nonprofit fueling sustainable research in the Global South.<br>
+    <a href="https://github.com/ersilia-os/.github/tree/main/repository-browser" target="_blank" rel="noopener">⌥ Source code on GitHub ↗</a>
+  </footer>
+</div>
+
+<!-- One reused node for every row. aria-hidden: it duplicates content that is
+     already in the DOM, so assistive tech should not hear it twice. -->
+<div class="hovercard" id="hovercard" aria-hidden="true"></div>
+
+<dialog class="modal" id="about">
+  <button class="close" data-close type="button">Close</button>
+  <div class="mbody">
+    <span class="eyebrow brand">About this data</span>
+    <h2>Where these repositories come from</h2>
+    <p class="muted" style="margin:.3em 0 0; max-width:60ch;">One snapshot file, searched entirely
+      in your browser. Nothing is fetched while you type.</p>
+
+    <div class="mrow">
+      <strong>Source.</strong> The <em>Repositories</em> table of Ersilia's <em>Ersilia Content</em>
+      Airtable base, which a nightly cron action keeps in step with the
+      <a href="https://github.com/ersilia-os" target="_blank" rel="noopener">ersilia-os</a> GitHub
+      organisation. The snapshot date is the day the data file was written, not the day of the last
+      repository change.
+    </div>
+
+    <div class="mrow" style="--c:var(--amber);">
+      <strong>Status and type are hand-maintained.</strong> Both are Airtable multi-select fields, so
+      a repository may carry two labels — <span class="mono" id="m-multi">a few</span> do. Neither is
+      inferred from GitHub activity, so a repository can be marked <em>In progress</em> and still be
+      quiet.
+    </div>
+
+    <div class="mrow" style="--c:var(--good);">
+      <strong>Archived and discontinued are outcomes, not failures.</strong> They are drawn in neutral
+      grey throughout, never red. Closing down a piece of research work is a normal ending.
+    </div>
+
+    <div class="mrow" style="--c:var(--egray);">
+      <strong>Private repositories are searchable but not linked.</strong>
+      <span class="mono" id="m-private">Some</span> of the
+      <span class="mono" id="m-total">180</span> are private; they carry a
+      <span class="badge ghost g-private">Private</span> badge and no link, since the URL
+      would 404 for anyone outside the organisation. The refresh script can drop them entirely with
+      <span class="mono">--exclude-private</span>.
+    </div>
+
+    <div class="mrow" style="--c:var(--cobalt);">
+      <strong>Search syntax.</strong> Free text matches the name, title, description and project.
+      Add <span class="mono">type:</span>, <span class="mono">status:</span>,
+      <span class="mono">project:</span>, <span class="mono">year:</span> or
+      <span class="mono">is:private</span> to narrow — the filter chips write exactly these tokens,
+      so the box always shows the whole query. Results rank by where the match lands: the repository
+      name first, then the title, project and description.
+    </div>
+
+    <p class="faint" style="margin-top:18px;">Built with the Ersilia
+      <span class="mono">html-formatting</span> house style. Single light theme by design.</p>
+  </div>
+</dialog>
+
+<script src="data/repositories.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var DATA = window.ERSILIA_REPOS;
+  var REPOS = (DATA && DATA.repositories) || [];
+
+  /* Semantic progression — used for SORTING by status, not for the panel. */
+  var STATUS_ORDER = ["Todo", "In progress", "Completed", "Idle", "Archived", "Discontinued"];
+  var STATUS_CLASS = {
+    "Todo": "s-todo", "In progress": "s-in-progress", "Completed": "s-completed",
+    "Idle": "s-idle", "Archived": "s-archived", "Discontinued": "s-discontinued"
+  };
+
+  /* Panel order. Documentation was not in the requested type order; it is
+     appended rather than dropped, so no type is missing from the panel. */
+  var GROUP_UI = {
+    type: ["Analysis", "Package", "App", "Workshop", "Automation", "Template", "Documentation"],
+    status: ["Completed", "In progress", "Idle", "Discontinued", "Todo", "Archived"],
+    is: ["Public", "Private"]
+  };
+  /* Chips are inclusion toggles, ON by default — except these, so the page opens
+     on live public work (94 of 180) rather than on everything ever created.
+     Unchecking a chip hides those repositories; colour means enabled. */
+  var DEFAULT_OFF = {
+    type: [],
+    status: ["Idle", "Discontinued", "Todo", "Archived"],
+    is: ["Private"]
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+  var norm = function (s) { return String(s || "").toLowerCase(); };
+  /* Hyphens, underscores and spaces are the same separator, so "chembl antimicrobial"
+     finds chembl-antimicrobial-tasks. */
+  var loose = function (s) { return norm(s).replace(/[-_\s]+/g, " ").trim(); };
+
+  if (!REPOS.length) {
+    $("context").innerHTML = "Could not load <span class=\"mono\">data/repositories.js</span>. " +
+      "Regenerate it with <span class=\"mono\">python scripts/fetch_repositories.py</span>.";
+    return;
+  }
+
+  /* ----------------------------------------------------------- vocabularies */
+  function tally(key) {
+    var m = Object.create(null);
+    REPOS.forEach(function (r) { (r[key] || []).forEach(function (v) { m[v] = (m[v] || 0) + 1; }); });
+    return m;
+  }
+  var statusCount = tally("status"), typeCount = tally("type"), projectCount = tally("projects");
+  /* The values each group actually offers, in panel order. */
+  var GROUP_VALUES = {
+    type: GROUP_UI.type.filter(function (v) { return typeCount[v]; }),
+    status: GROUP_UI.status.filter(function (v) { return statusCount[v]; }),
+    is: GROUP_UI.is
+  };
+  /* Alphabetical: the dropdown is something you scan for a known name, not a
+     ranking. The counts still show beside each option. */
+  var projects = Object.keys(projectCount).sort(function (a, b) {
+    return a.localeCompare(b);
+  });
+  var TOTAL = REPOS.length;
+
+  /* Precompute the searchable forms once, not per keystroke. */
+  REPOS.forEach(function (r) {
+    r._slug = norm(r.name);
+    r._slugLoose = loose(r.name);
+    r._words = r._slug.split(/[-_]/);
+    r._title = norm(r.title);
+    r._desc = norm(r.description);
+    r._proj = norm(r.projects.join(" "));
+    r._type = norm(r.type.join(" "));
+    r._status = norm(r.status.join(" "));
+    r._year = String(r.created).slice(0, 4);
+  });
+
+  /* ------------------------------------------------------------ query model */
+  var FILTER_KEYS = { type: 1, status: 1, project: 1, year: 1, is: 1 };
+  var TOKEN_RE = /(\w+):("[^"]*"|'[^']*'|\S+)/g;
+
+  /* The query string is the single source of truth: filters live in it as
+     tokens, so the box always shows exactly what is being applied. */
+  function parseQuery(raw) {
+    var filters = { type: [], status: [], project: [], year: [], is: [] };
+    var rest = String(raw || "").replace(TOKEN_RE, function (m, key, val) {
+      key = key.toLowerCase();
+      if (!FILTER_KEYS[key]) { return m; }
+      filters[key].push(val.replace(/^["']|["']$/g, "").toLowerCase());
+      return " ";
+    });
+    var terms = rest.toLowerCase().split(/[\s,]+/).filter(Boolean);
+    return { terms: terms, filters: filters, phrase: loose(rest) };
+  }
+
+  /* Which values of a group are in play. A typed token scopes the group
+     explicitly and overrides the chips; otherwise the chip state applies. */
+  function enabledFor(group, f) {
+    if (f[group].length) {
+      return GROUP_VALUES[group].filter(function (v) {
+        return f[group].indexOf(norm(v)) > -1;
+      });
+    }
+    return state.enabled[group];
+  }
+
+  function passesFilters(r, f, skip) {
+    function anyEnabled(vals, group) {
+      var en = enabledFor(group, f);
+      for (var i = 0; i < vals.length; i++) {
+        if (en.indexOf(vals[i]) > -1) { return true; }
+      }
+      return false;
+    }
+    if (skip !== "type" && !anyEnabled(r.type, "type")) { return false; }
+    if (skip !== "status" && !anyEnabled(r.status, "status")) { return false; }
+    if (skip !== "is" && enabledFor("is", f).indexOf(r.visibility) === -1) { return false; }
+    if (skip !== "project" && f.project.length &&
+        !f.project.some(function (v) { return r._proj.indexOf(v) > -1; })) { return false; }
+    if (skip !== "year" && f.year.length && f.year.indexOf(r._year) === -1) { return false; }
+    return true;
+  }
+
+  function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+  /* Word-boundary tests are the hot path (180 repos × terms × fields), so the
+     regex for a term is compiled once and reused. */
+  var reCache = Object.create(null);
+  function wordStart(hay, t) {
+    var re = reCache[t] || (reCache[t] = new RegExp("\\b" + escapeRe(t)));
+    return re.test(hay);
+  }
+
+  /* Every term must land somewhere, and scores by WHERE it lands — the name is
+     what people actually type, so it outranks a passing mention in prose.
+     Ordered strongest-first within each field: exact, prefix, word, substring. */
+  function score(r, q) {
+    var total = 0;
+    for (var i = 0; i < q.terms.length; i++) {
+      var t = q.terms[i], b = 0;
+      if (r._slug === t) { b = 1000; }
+      else if (r._slug.indexOf(t) === 0) { b = 400; }
+      else if (r._words.indexOf(t) > -1) { b = 300; }
+      else if (r._slug.indexOf(t) > -1) { b = 250; }
+
+      if (b < 160 && wordStart(r._title, t)) { b = 160; }
+      else if (b < 120 && r._title.indexOf(t) > -1) { b = 120; }
+
+      if (b < 90 && r._proj.indexOf(t) > -1) { b = 90; }
+      if (b < 60 && (r._type.indexOf(t) > -1 || r._status.indexOf(t) > -1)) { b = 60; }
+
+      if (b < 50 && wordStart(r._desc, t)) { b = 50; }
+      else if (b < 30 && r._desc.indexOf(t) > -1) { b = 30; }
+
+      if (!b) { return -1; }             /* AND: one miss drops the repository */
+      total += b;
+    }
+    /* A contiguous match of the whole query beats the same words scattered. */
+    if (q.phrase && q.phrase.indexOf(" ") > -1) {
+      if (r._slugLoose.indexOf(q.phrase) > -1) { total += 500; }
+      else if (loose(r.title).indexOf(q.phrase) > -1) { total += 240; }
+    }
+    return total + (parseInt(r._year, 10) - 2019) * 2;   /* newer breaks ties */
+  }
+
+  /* Ranges are computed on the RAW string and the segments escaped as we walk
+     it, so an apostrophe becoming &#39; can never shift a later offset. */
+  function highlight(raw, terms) {
+    var s = String(raw || "");
+    if (!terms.length) { return esc(s); }
+    var low = s.toLowerCase(), ranges = [];
+    terms.forEach(function (t) {
+      var from = 0, at;
+      while ((at = low.indexOf(t, from)) > -1) { ranges.push([at, at + t.length]); from = at + t.length; }
+    });
+    if (!ranges.length) { return esc(s); }
+    ranges.sort(function (a, b) { return a[0] - b[0]; });
+    var merged = [ranges[0]];
+    ranges.slice(1).forEach(function (r) {
+      var last = merged[merged.length - 1];
+      if (r[0] <= last[1]) { last[1] = Math.max(last[1], r[1]); } else { merged.push(r); }
+    });
+    var out = "", pos = 0;
+    merged.forEach(function (r) {
+      out += esc(s.slice(pos, r[0])) + "<mark>" + esc(s.slice(r[0], r[1])) + "</mark>";
+      pos = r[1];
+    });
+    return out + esc(s.slice(pos));
+  }
+
+  /* ------------------------------------------------------------------ state
+     sort === null means "automatic": relevance while there is a query, newest
+     otherwise. Clicking a column header sets it explicitly; the toolbar then
+     offers a way back to the ranked order. */
+  var state = { raw: "", sort: null, dir: 1, sel: -1, list: [], enabled: null };
+
+  function defaultEnabled() {
+    var out = {};
+    Object.keys(GROUP_VALUES).forEach(function (g) {
+      out[g] = GROUP_VALUES[g].filter(function (v) { return DEFAULT_OFF[g].indexOf(v) === -1; });
+    });
+    return out;
+  }
+  function allEnabled() {
+    var out = {};
+    Object.keys(GROUP_VALUES).forEach(function (g) { out[g] = GROUP_VALUES[g].slice(); });
+    return out;
+  }
+  state.enabled = defaultEnabled();
+
+  /* How many repositories the query alone would match if no chip were off. The
+     difference from the result count is what the filters are currently hiding. */
+  function countUnfiltered(q) {
+    var saved = state.enabled;
+    state.enabled = allEnabled();
+    var n = 0;
+    for (var i = 0; i < REPOS.length; i++) {
+      var r = REPOS[i];
+      if (!passesFilters(r, q.filters)) { continue; }
+      if (q.hasQuery && score(r, q) < 0) { continue; }
+      n++;
+    }
+    state.enabled = saved;
+    return n;
+  }
+
+  var COL_LABEL = { name: "Repository", title: "Title", type: "Type",
+                    status: "Status", project: "Project", created: "Created" };
+  var COL_KEY = {
+    name: function (r) { return r._slug; },
+    title: function (r) { return r._title; },
+    type: function (r) { return r._type; },
+    status: function (r) { return STATUS_ORDER.indexOf(r.status[0]); },
+    /* Repositories with no project sort last in either direction rather than
+       clumping at the top as empty strings. */
+    project: function (r) { return r.projects.length ? norm(r.projects[0]) : "￿"; },
+    created: function (r) { return r.created; }
+  };
+
+  function effectiveSort(hasQuery) {
+    if (state.sort) { return { col: state.sort, dir: state.dir }; }
+    return hasQuery ? { col: "relevance", dir: -1 } : { col: "created", dir: -1 };
+  }
+
+  function search() {
+    var q = parseQuery(state.raw);
+    var hasQuery = q.terms.length > 0;
+    var out = [];
+    for (var i = 0; i < REPOS.length; i++) {
+      var r = REPOS[i];
+      if (!passesFilters(r, q.filters)) { continue; }
+      var sc = hasQuery ? score(r, q) : 0;
+      if (sc < 0) { continue; }
+      out.push({ r: r, sc: sc });
+    }
+    var eff = effectiveSort(hasQuery);
+    out.sort(function (a, b) {
+      if (eff.col === "relevance") { return b.sc - a.sc || a.r._slug.localeCompare(b.r._slug); }
+      var get = COL_KEY[eff.col];
+      var x = get(a.r), y = get(b.r);
+      var c = x < y ? -1 : x > y ? 1 : 0;
+      return c * eff.dir || a.r._slug.localeCompare(b.r._slug);
+    });
+    state.list = out.map(function (o) { return o.r; });
+    q.eff = eff;
+    q.hasQuery = hasQuery;
+    return q;
+  }
+
+  /* ----------------------------------------------------------------- render */
+  function badge(s) {
+    return '<span class="badge ' + STATUS_CLASS[s] + '" style="--c:var(--sc);">' + esc(s) + '</span>';
+  }
+
+  var slugify = function (s) { return norm(s).replace(/[^a-z0-9]+/g, "-"); };
+
+  /* A repository may carry two types or two statuses (5 and 3 of them do). Two
+     badges do not fit an 11% column and wrapping would break the one-line rule,
+     so show the first and count the rest — the tooltip lists them all. */
+  function badgeCell(values, cls, render) {
+    if (!values.length) { return '<span class="faint">—</span>'; }
+    var out = render(values[0]);
+    if (values.length > 1) {
+      out += '<span class="badge more">+' + (values.length - 1) + "</span>";
+    }
+    return out;
+  }
+
+  function typeBadge(t) {
+    return '<span class="badge t-' + slugify(t) + '">' + esc(t) + "</span>";
+  }
+
+  /* One <tr> per repository, one line each. The row is the single element
+     carrying .hit / data-i / hover / selection, so open(), the delegated click
+     and the mousemove handler keep working unchanged. */
+  function renderHits(q) {
+    var terms = q.terms;
+    var html = state.list.map(function (r, i) {
+      var isPrivate = r.visibility === "Private";
+      var slug = highlight(r.name, terms);
+      var repoCell = isPrivate
+        ? '<span class="nolink">' + slug + '</span>' +
+          '<span class="badge ghost g-private">Private</span>'
+        : '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' +
+          slug + ' <span class="arr">↗</span></a>';
+      var projCell = r.projects.length
+        ? highlight(r.projects.join(", "), terms)
+        : '<span class="faint">—</span>';
+      /* No title attributes anywhere: the hover card replaces them, and a native
+         tooltip would surface on top of it a second later. The title, slug and
+         project text is all in the DOM already (only visually clipped), so
+         assistive tech loses nothing — except the description, which is why it
+         is carried in a visually-hidden span. */
+      return '<tr class="hit' + (isPrivate ? " private" : "") + '" data-i="' + i + '">' +
+        '<td class="c-repo">' + repoCell + '</td>' +
+        '<td class="c-title">' + highlight(r.title || r.name, terms) +
+        (r.description ? '<span class="sr-only"> — ' + esc(r.description) + '</span>' : '') +
+        '</td>' +
+        '<td class="c-type">' + badgeCell(r.type, "type", typeBadge) + '</td>' +
+        '<td class="c-status">' + badgeCell(r.status, "status", badge) + '</td>' +
+        '<td class="c-project">' + projCell + '</td>' +
+        '<td class="c-created">' + esc(r.created) + '</td>' +
+        '</tr>';
+    }).join("");
+    /* Replace the tbody only — the colgroup and thead are static and must survive. */
+    var table = $("hits");
+    while (table.tBodies.length) { table.removeChild(table.tBodies[0]); }
+    table.insertAdjacentHTML("beforeend", "<tbody>" + html + "</tbody>");
+  }
+
+  function renderSort(q) {
+    Array.prototype.forEach.call($("hits").querySelectorAll("thead th"), function (th) {
+      var on = q.eff.col === th.dataset.col;
+      th.setAttribute("aria-sort", on ? (q.eff.dir === 1 ? "ascending" : "descending") : "none");
+      var btn = th.querySelector("button");
+      var base = btn.textContent.replace(/\s*[▲▼]\s*$/, "").trim();
+      btn.innerHTML = esc(base) +
+        (on ? ' <span class="arrow">' + (q.eff.dir === 1 ? "▲" : "▼") + "</span>" : "");
+    });
+    /* The note only appears when it tells you something the header arrows cannot. */
+    if (!q.hasQuery) { $("sortnote").innerHTML = ""; return; }
+    $("sortnote").innerHTML = state.sort
+      ? '<button type="button" id="sortreset">Rank by relevance</button>'
+      : "ranked by relevance";
+    if (state.sort) { $("sortreset").addEventListener("click", relevanceSort); }
+  }
+
+  function relevanceSort() { state.sort = null; state.dir = 1; render(); }
+
+  /* Counts are computed against every OTHER active filter, so a chip shows what
+     picking it would actually yield. Zero-yield chips are dimmed, not hidden. */
+  function renderFacets(q) {
+    ["status", "type", "is"].forEach(function (key) {
+      var en = enabledFor(key, q.filters);
+      $("f-" + key).innerHTML = GROUP_VALUES[key].map(function (v) {
+        var n = 0;
+        for (var i = 0; i < REPOS.length; i++) {
+          var r = REPOS[i];
+          if (!passesFilters(r, q.filters, key)) { continue; }
+          var has = key === "is" ? r.visibility === v : r[key].indexOf(v) > -1;
+          if (!has) { continue; }
+          if (q.terms.length && score(r, q) < 0) { continue; }
+          n++;
+        }
+        var on = en.indexOf(v) > -1;
+        /* The chip carries the same colour class as the badge it enables, so the
+           control and the result are visibly the same thing. */
+        var tint = key === "status" ? " " + STATUS_CLASS[v]
+                 : key === "type" ? " t-" + slugify(v)
+                 : (v === "Private" ? " ghost g-private" : " ghost g-public");
+        return '<button type="button" class="chip' + tint + '" data-facet="' + key +
+          '" data-value="' + esc(v) + '" aria-pressed="' + on + '"' +
+          (!n && !on ? " disabled" : "") + '>' +
+          esc(v) + ' <span class="n">' + n + '</span></button>';
+      }).join(" ");
+    });
+    $("f-project").value = q.filters.project.length ? q.filters.project[0] : "";
+  }
+
+  function render() {
+    var q = search();
+    var active = q.terms.length > 0 || Object.keys(q.filters).some(function (k) {
+      return q.filters[k].length > 0;
+    });
+
+    $("clearq").hidden = !state.raw;
+
+    var n = state.list.length;
+    $("count").innerHTML = n === TOTAL
+      ? "<strong>" + n + "</strong> repositories"
+      : "<strong>" + n + "</strong> of " + TOTAL;
+    renderFacets(q);
+    renderHits(q);
+    renderSort(q);
+
+    /* Only where it prevents a dead end: while searching, or when nothing is
+       showing at all. On the landing view the default filters are the point, and
+       the chips already say which are off. */
+    var hidden = countUnfiltered(q) - n;
+    var worthSaying = hidden > 0 && (q.hasQuery || n === 0);
+    $("filterhint").hidden = !worthSaying;
+    if (worthSaying) {
+      $("filterhint").innerHTML = "<strong>" + hidden + "</strong> " +
+        (n === 0
+          ? (hidden === 1 ? "repository matches" : "repositories match")
+          : "more " + (hidden === 1 ? "matches" : "match")) +
+        " but " + (hidden === 1 ? "is" : "are") + " hidden by the filters above." +
+        '<button type="button" id="showall">Show all</button>';
+      $("showall").addEventListener("click", function () {
+        state.enabled = allEnabled();
+        render();
+      });
+    }
+
+    $("empty").hidden = n > 0;
+    $("hits").hidden = n === 0;
+    if (!n) {
+      /* Reachable by unchecking every chip as well as by a bad query, so this
+         resets the filters to their defaults too, not only the text. */
+      $("empty").innerHTML = '<h2>No repository matches this search</h2>' +
+        '<p>Try fewer words, or re-enable a filter.</p>' +
+        '<button type="button" id="clearall">Reset search and filters</button>';
+      $("clearall").addEventListener("click", function () {
+        state.enabled = defaultEnabled();
+        clearAll();
+      });
+    }
+    state.sel = -1;
+    updateSel();
+    syncHeadHeight();
+  }
+
+  /* ---------------------------------------------------------- hover card */
+  var CAN_HOVER = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var hcTimer = null;
+
+  function cardHTML(r) {
+    var badges = r.type.map(typeBadge).join("") + r.status.map(badge).join("") +
+      (r.visibility === "Private" ? '<span class="badge ghost g-private">Private</span>' : "");
+    return '<span class="hc-slug">' + esc(r.name) + '</span>' +
+      '<p class="hc-title">' + esc(r.title || r.name) + '</p>' +
+      (r.description ? '<p class="hc-desc">' + esc(r.description) + '</p>' : "") +
+      '<div class="hc-badges">' + badges + '</div>' +
+      '<dl><dt>Project</dt><dd>' +
+      (r.projects.length ? esc(r.projects.join(", ")) : "—") + '</dd>' +
+      '<dt>Created</dt><dd>' + esc(r.created) + '</dd></dl>' +
+      '<div class="hc-foot">' +
+      (r.visibility === "Private"
+        ? '<span class="hc-url">Private — no public URL</span>'
+        : '<span class="hc-url">' + esc(r.url.replace(/^https:\/\//, "")) + '</span>' +
+          '<span class="hc-key">↵ to open</span>') +
+      '</div>';
+  }
+
+  /* Anchored to the row, flipped above when there is no room below, and clamped
+     so it never leaves the viewport on the last row or the rightmost columns. */
+  function showCard(row, i) {
+    var r = state.list[i];
+    if (!r || !row) { return; }
+    var card = $("hovercard");
+    card.innerHTML = cardHTML(r);
+    card.dataset.show = "1";
+    var rect = row.getBoundingClientRect();
+    var cw = card.offsetWidth, ch = card.offsetHeight, pad = 12;
+    var left = Math.min(Math.max(pad, rect.left + 24), window.innerWidth - cw - pad);
+    var below = rect.bottom + 8;
+    var top = (below + ch > window.innerHeight - pad) ? rect.top - ch - 8 : below;
+    card.style.left = Math.round(left) + "px";
+    card.style.top = Math.round(Math.max(pad, top)) + "px";
+  }
+  function hideCard() {
+    clearTimeout(hcTimer);
+    var card = $("hovercard");
+    card.dataset.show = "0";
+    /* Clear the inline coordinates too. A hidden fixed element still takes part
+       in layout, so stale offsets from a wider viewport widen the document after
+       a resize — which is exactly how this leaked a horizontal scrollbar. */
+    card.style.left = card.style.top = "";
+  }
+  function scheduleCard(row, i, delay) {
+    clearTimeout(hcTimer);
+    hcTimer = setTimeout(function () { showCard(row, i); }, delay);
+  }
+
+  /* ------------------------------------------------------------- selection
+     fromKey distinguishes the two ways a row becomes selected: the keyboard
+     shows the card at once (it is the only way a keyboard user can see the
+     description), while hovering goes through a delay so the card does not
+     flicker as the pointer crosses the table. */
+  function updateSel(fromKey) {
+    var nodes = $("hits").querySelectorAll("tbody tr.hit");
+    for (var i = 0; i < nodes.length; i++) { nodes[i].classList.toggle("sel", i === state.sel); }
+    if (state.sel > -1 && nodes[state.sel]) {
+      nodes[state.sel].scrollIntoView({ block: "nearest" });
+      if (fromKey) { clearTimeout(hcTimer); showCard(nodes[state.sel], state.sel); }
+    } else {
+      hideCard();
+    }
+  }
+  function move(d) {
+    var n = state.list.length;
+    if (!n) { return; }
+    state.sel = state.sel < 0 ? (d > 0 ? 0 : n - 1) : (state.sel + d + n) % n;
+    updateSel(true);
+  }
+  function open(i) {
+    var r = state.list[i];
+    if (r && r.visibility !== "Private") { window.open(r.url, "_blank", "noopener"); }
+  }
+
+  /* ------------------------------------------------------ query mutation */
+  function setQuery(raw, opts) {
+    state.raw = raw;
+    $("q").value = raw;
+    render();
+    if (!opts || opts.focus !== false) { $("q").focus(); }
+  }
+  function addToken(key, val) {
+    var tok = key + ":" + (/\s/.test(val) ? '"' + val + '"' : val);
+    setQuery((state.raw + " " + tok).trim());
+  }
+  function stripToken(raw, key, val) {
+    var re = new RegExp("\\s*" + escapeRe(key) + ':("' + escapeRe(val) + '"|\'' +
+      escapeRe(val) + "'|" + escapeRe(val) + ")(?=\\s|$)", "gi");
+    return raw.replace(re, " ").replace(/\s+/g, " ").trim();
+  }
+  function dropToken(key, val) { setQuery(stripToken(state.raw, key, val)); }
+
+  /* Clicking a chip takes ownership of its group: any typed token for that group
+     is folded into the chip state and removed from the query, so the two can
+     never disagree about what is enabled. */
+  function toggleChip(group, value) {
+    var q = parseQuery(state.raw);
+    if (q.filters[group].length) {
+      state.enabled[group] = enabledFor(group, q.filters).slice();
+      var raw = state.raw;
+      q.filters[group].forEach(function (v) { raw = stripToken(raw, group, v); });
+      state.raw = raw;
+      $("q").value = raw;
+    }
+    var arr = state.enabled[group], i = arr.indexOf(value);
+    if (i > -1) { arr.splice(i, 1); } else { arr.push(value); }
+    render();
+  }
+  /* Clearing resets the sort too: a leftover column sort from a previous search
+     makes the next one look broken, because the best match is no longer first. */
+  function clearAll() {
+    state.sort = null;
+    state.dir = 1;
+    setQuery("");
+  }
+
+  /* ----------------------------------------------------------------- wiring */
+  var debounce;
+  $("q").addEventListener("input", function (e) {
+    var v = e.target.value;
+    clearTimeout(debounce);
+    debounce = setTimeout(function () { state.raw = v; render(); }, 110);
+  });
+  $("searchbox").addEventListener("submit", function (e) {
+    e.preventDefault();
+    clearTimeout(debounce);
+    state.raw = $("q").value;
+    render();
+  });
+  $("clearq").addEventListener("click", clearAll);
+
+  /* Column headers are the sort control. Clicking the active column reverses it;
+     dates and relevance start descending, text ascending. */
+  $("hits").addEventListener("click", function (e) {
+    var th = e.target.closest("thead th[data-col]");
+    if (!th) { return; }
+    var col = th.dataset.col;
+    if (state.sort === col) { state.dir = -state.dir; }
+    else { state.sort = col; state.dir = col === "created" ? -1 : 1; }
+    render();
+  });
+  $("f-project").addEventListener("change", function (e) {
+    var q = parseQuery(state.raw);
+    q.filters.project.forEach(function (v) { dropToken("project", v); });
+    if (e.target.value) { addToken("project", e.target.value); }
+    else { render(); }
+  });
+
+  document.addEventListener("click", function (e) {
+
+    var chip = e.target.closest("[data-facet]");
+    if (chip && !chip.disabled) {
+      toggleChip(chip.dataset.facet, chip.dataset.value);
+      return;
+    }
+
+    if (e.target.closest("[data-close]")) {
+      var dlg = e.target.closest("dialog");
+      if (dlg) { dlg.close(); }
+      return;
+    }
+
+    /* Anywhere on a result row follows its link, but never steal a real click
+       on the title, the slug, or a control inside the row. */
+    var hit = e.target.closest(".hit");
+    if (hit && !e.target.closest("a, button")) { open(Number(hit.dataset.i)); }
+  });
+
+  $("hits").addEventListener("mousemove", function (e) {
+    if (!CAN_HOVER) { return; }
+    var hit = e.target.closest(".hit");
+    if (!hit) { return; }
+    var i = Number(hit.dataset.i);
+    if (i !== state.sel) {
+      state.sel = i;
+      updateSel(false);
+      scheduleCard(hit, i, 280);
+    }
+  });
+  $("hits").addEventListener("mouseleave", hideCard);
+  /* One scroll handler: the card is anchored to a row and the row moves, and the
+     dock only takes its border once it has actually pinned. */
+  window.addEventListener("scroll", function () {
+    hideCard();
+    $("searchdock").classList.toggle(
+      "is-stuck", $("searchdock").getBoundingClientRect().top <= 0.5);
+  }, { passive: true });
+
+  $("about-open").addEventListener("click", function () { $("about").showModal(); });
+
+  document.addEventListener("keydown", function (e) {
+    var inField = e.target === $("q");
+    if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault(); $("q").focus(); $("q").select(); return;
+    }
+    if (e.key === "/" && !inField && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault(); $("q").focus(); return;
+    }
+    if ($("about").open) { return; }
+    if (e.key === "ArrowDown") { e.preventDefault(); move(1); return; }
+    if (e.key === "ArrowUp") { e.preventDefault(); move(-1); return; }
+    if (e.key === "Enter" && state.sel > -1) { e.preventDefault(); open(state.sel); return; }
+    if (e.key === "Escape") {
+      hideCard();
+      if (state.raw) { e.preventDefault(); clearAll(); }
+      else { $("q").blur(); }
+    }
+  });
+
+  /* The search dock pins at the top, so the column headers have to pin below it
+     rather than under it. Its measured height drives --headh. */
+  function syncHeadHeight() {
+    document.documentElement.style.setProperty(
+      "--headh", Math.round($("searchdock").getBoundingClientRect().height) + "px");
+  }
+  window.addEventListener("resize", syncHeadHeight, { passive: true });
+
+  /* -------------------------------------------------------------- one-time */
+  $("f-project").innerHTML = '<option value="">All projects</option>' +
+    projects.map(function (p) {
+      return '<option value="' + esc(p) + '">' + esc(p) + ' (' + projectCount[p] + ')</option>';
+    }).join("");
+
+  var privateN = REPOS.filter(function (r) { return r.visibility === "Private"; }).length;
+  /* The fixed size of the registry, stated once here. The count in the search
+     field is a different number doing a different job — it answers the query. */
+  $("context").innerHTML = '<span class="n">' + TOTAL + '</span> repositories · ' +
+    '<span class="n">' + projects.length + '</span> projects · snapshot ' +
+    '<span class="n">' + esc(DATA.snapshot) + '</span>';
+  $("m-multi").textContent = REPOS.filter(function (r) {
+    return r.status.length > 1 || r.type.length > 1;
+  }).length;
+  $("m-private").textContent = privateN;
+  $("m-total").textContent = TOTAL;
+
+  render();
+})();
+</script>
