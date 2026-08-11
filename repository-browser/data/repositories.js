@@ -25,7 +25,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-06-12",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "rec0bS6UOHbvEtMpY"
       ]
     },
     {
@@ -42,7 +42,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-01-21",
       "projects": [
-        "Gram-negative antibiotics discovery with GARDP"
+        "recTJG9wk4nf0YB2t"
       ]
     },
     {
@@ -59,7 +59,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-02-23",
       "projects": [
-        "AI2050 Compute Fund"
+        "recjFTGgRexgSiMar"
       ]
     },
     {
@@ -76,7 +76,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-08-19",
       "projects": [
-        "AI2050 for capacity building at H3D"
+        "recbmtUj38OZld55J"
       ]
     },
     {
@@ -93,7 +93,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-06-16",
       "projects": [
-        "AI2050 Collaboration Fund"
+        "recq45znArC7nfWdy"
       ]
     },
     {
@@ -110,7 +110,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-05-08",
       "projects": [
-        "AI2050 for capacity building at H3D"
+        "recbmtUj38OZld55J"
       ]
     },
     {
@@ -127,7 +127,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-10-28",
       "projects": [
-        "AI2050 for TB Modelling"
+        "recpB3zKo2FiWQKNn"
       ]
     },
     {
@@ -144,7 +144,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2026-03-11",
       "projects": [
-        "AI2050 for capacity building at H3D"
+        "recbmtUj38OZld55J"
       ]
     },
     {
@@ -162,7 +162,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-11-08",
       "projects": [
-        "NiDNA CeDD"
+        "rec0B8iVMqENJ33Jb"
       ]
     },
     {
@@ -179,7 +179,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-04-25",
       "projects": [
-        "NiDNA CeDD"
+        "rec0B8iVMqENJ33Jb"
       ]
     },
     {
@@ -196,7 +196,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-01-13",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -243,7 +243,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2022-08-19",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -260,7 +260,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2021-12-15",
       "projects": [
-        "AI2050 for capacity building at H3D"
+        "recbmtUj38OZld55J"
       ]
     },
     {
@@ -307,7 +307,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-01-12",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -324,7 +324,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2022-07-06",
       "projects": [
-        "Chemoproteomics ligand discovery"
+        "recxg7j4bL0woseQt"
       ]
     },
     {
@@ -341,7 +341,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2023-02-07",
       "projects": [
-        "Severe malaria biomarkers"
+        "recfad2tnmiw0vbeA"
       ]
     },
     {
@@ -358,7 +358,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-01-02",
       "projects": [
-        "CHAMPS diagrams"
+        "recR1Q5falgGfuDFQ"
       ]
     },
     {
@@ -390,8 +390,8 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-04-09",
       "projects": [
-        "Scaffold Hopping from Natural Products",
-        "Plan Generación Conocimiento"
+        "rec0bS6UOHbvEtMpY",
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -408,7 +408,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-11-17",
       "projects": [
-        "Plan Generación Conocimiento"
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -425,7 +425,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-04-13",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -442,7 +442,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-09-15",
       "projects": [
-        "Plan Generación Conocimiento"
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -505,7 +505,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-02-17",
       "projects": [
-        "Chemoproteomics ligand discovery"
+        "recxg7j4bL0woseQt"
       ]
     },
     {
@@ -537,7 +537,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-01-13",
       "projects": [
-        "ChemPFN"
+        "rechEtDGUDTdzw8RL"
       ]
     },
     {
@@ -554,7 +554,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2024-02-14",
       "projects": [
-        "ChemPFN"
+        "rechEtDGUDTdzw8RL"
       ]
     },
     {
@@ -586,7 +586,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2022-10-04",
       "projects": [
-        "Record Linkage CxCa"
+        "rec4bzgSntbNe1TUx"
       ]
     },
     {
@@ -603,7 +603,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-01-19",
       "projects": [
-        "Record Linkage CxCa"
+        "rec4bzgSntbNe1TUx"
       ]
     },
     {
@@ -620,7 +620,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-01-14",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -637,7 +637,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-12-20",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -654,7 +654,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-04-05",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -671,7 +671,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-08-12",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "recgbfjw2w5TTdtUx"
       ]
     },
     {
@@ -733,7 +733,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2019-08-19",
       "projects": [
-        "Record Linkage CxCa"
+        "rec4bzgSntbNe1TUx"
       ]
     },
     {
@@ -750,8 +750,8 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-07-15",
       "projects": [
-        "Targeted protein degradation for tuberculosis",
-        "Gram-negative antibiotics discovery with GARDP"
+        "recgbfjw2w5TTdtUx",
+        "recTJG9wk4nf0YB2t"
       ]
     },
     {
@@ -783,7 +783,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-05-09",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -845,7 +845,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-09-17",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -863,7 +863,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-03-19",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -895,7 +895,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-07-22",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -912,7 +912,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-04-16",
       "projects": [
-        "Plan Generación Conocimiento"
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -944,7 +944,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2020-07-04",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -991,7 +991,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-01-16",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1008,8 +1008,8 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-09-25",
       "projects": [
-        "Mozilla Builders",
-        "Splunk data store"
+        "rec0kJQ0rw3jMAikD",
+        "recPX0ae5P4s1CZJx"
       ]
     },
     {
@@ -1041,7 +1041,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-05-15",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1073,7 +1073,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2023-01-30",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1090,7 +1090,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-05-22",
       "projects": [
-        "AI2050 for capacity building at H3D"
+        "recbmtUj38OZld55J"
       ]
     },
     {
@@ -1122,7 +1122,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-03-05",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1184,7 +1184,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-11-23",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1216,7 +1216,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-01-14",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1233,7 +1233,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-10-06",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1250,7 +1250,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-02-27",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1267,7 +1267,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-05-29",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1284,7 +1284,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-10-08",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1316,7 +1316,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-04-23",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1395,7 +1395,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-03-18",
       "projects": [
-        "Splunk data store"
+        "recPX0ae5P4s1CZJx"
       ]
     },
     {
@@ -1442,7 +1442,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-09-05",
       "projects": [
-        "Record Linkage CxCa"
+        "rec4bzgSntbNe1TUx"
       ]
     },
     {
@@ -1459,7 +1459,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-09-06",
       "projects": [
-        "Record Linkage CxCa"
+        "rec4bzgSntbNe1TUx"
       ]
     },
     {
@@ -1566,7 +1566,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2026-07-30",
       "projects": [
-        "Gram-negative antibiotics discovery with GARDP"
+        "recTJG9wk4nf0YB2t"
       ]
     },
     {
@@ -1583,7 +1583,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-04-14",
       "projects": [
-        "Gram-negative antibiotics discovery with GARDP"
+        "recTJG9wk4nf0YB2t"
       ]
     },
     {
@@ -1600,7 +1600,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-12-16",
       "projects": [
-        "Gram-negative antibiotics discovery with GARDP"
+        "recTJG9wk4nf0YB2t"
       ]
     },
     {
@@ -1617,7 +1617,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-01-08",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "recgbfjw2w5TTdtUx"
       ]
     },
     {
@@ -1665,7 +1665,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-12-21",
       "projects": [
-        "RES-BSC Precalculations"
+        "reckMHVE2kXwMAj3K"
       ]
     },
     {
@@ -1682,7 +1682,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2026-02-03",
       "projects": [
-        "AI2050 Collaboration Fund"
+        "recq45znArC7nfWdy"
       ]
     },
     {
@@ -1699,7 +1699,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-11-04",
       "projects": [
-        "H3D Mtb Bioactivity"
+        "recclsG9OuDViicOj"
       ]
     },
     {
@@ -1717,7 +1717,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2021-09-09",
       "projects": [
-        "AI2050 for TB Modelling"
+        "recpB3zKo2FiWQKNn"
       ]
     },
     {
@@ -1749,7 +1749,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2021-10-19",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -1766,7 +1766,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-04-21",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -1783,7 +1783,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-11-25",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -1800,7 +1800,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-11-25",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -1817,7 +1817,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-08-21",
       "projects": [
-        "HIV follow up during COVID in Zambia"
+        "recGE9MBiLSypCFLh"
       ]
     },
     {
@@ -1864,7 +1864,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-10-19",
       "projects": [
-        "NPs as schistosoma drugs"
+        "rec3cfgagSjFJz8Y1"
       ]
     },
     {
@@ -1881,7 +1881,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-01-16",
       "projects": [
-        "PQZ signature reversal"
+        "recKcHbKwKxLtLebP"
       ]
     },
     {
@@ -1898,8 +1898,8 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-09-08",
       "projects": [
-        "Ersilia Model Hub",
-        "Splunk data store"
+        "recZXJT8MJzSbYej0",
+        "recPX0ae5P4s1CZJx"
       ]
     },
     {
@@ -1931,7 +1931,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-11-19",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -1963,7 +1963,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2025-10-28",
       "projects": [
-        "AID3 molecular glue discovery"
+        "recrU0jjcDuwcxDG0"
       ]
     },
     {
@@ -2010,8 +2010,8 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-11-22",
       "projects": [
-        "Ersilia Model Hub",
-        "Splunk data store"
+        "recZXJT8MJzSbYej0",
+        "recPX0ae5P4s1CZJx"
       ]
     },
     {
@@ -2043,7 +2043,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-11-20",
       "projects": [
-        "RES-BSC Precalculations"
+        "reckMHVE2kXwMAj3K"
       ]
     },
     {
@@ -2090,7 +2090,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-11-26",
       "projects": [
-        "Collaboration Fund BMGF"
+        "recTyMyehsIEgcvWX"
       ]
     },
     {
@@ -2107,7 +2107,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-11-21",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "recgbfjw2w5TTdtUx"
       ]
     },
     {
@@ -2169,7 +2169,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-08-13",
       "projects": [
-        "Splunk data store"
+        "recPX0ae5P4s1CZJx"
       ]
     },
     {
@@ -2186,7 +2186,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2023-11-05",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "rec0bS6UOHbvEtMpY"
       ]
     },
     {
@@ -2203,7 +2203,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-09-09",
       "projects": [
-        "AI2050 for TB Modelling"
+        "recpB3zKo2FiWQKNn"
       ]
     },
     {
@@ -2265,7 +2265,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-05-20",
       "projects": [
-        "Open Source Antibiotics"
+        "recFPjDt6JvRFOfDz"
       ]
     },
     {
@@ -2282,7 +2282,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-07-22",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2299,7 +2299,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-05-27",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2316,7 +2316,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-07-20",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2333,7 +2333,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-03-06",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2350,7 +2350,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-07-03",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2367,7 +2367,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-02-08",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2384,7 +2384,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-03-21",
       "projects": [
-        "Open Source Antimalarials"
+        "recHZzQUQ1VVrr3ZP"
       ]
     },
     {
@@ -2431,7 +2431,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-05-16",
       "projects": [
-        "African pharmacogenomics"
+        "recDb7PGcVz7Cvfbr"
       ]
     },
     {
@@ -2448,7 +2448,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-05-30",
       "projects": [
-        "African pharmacogenomics"
+        "recDb7PGcVz7Cvfbr"
       ]
     },
     {
@@ -2465,7 +2465,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-01-24",
       "projects": [
-        "African pharmacogenomics"
+        "recDb7PGcVz7Cvfbr"
       ]
     },
     {
@@ -2482,7 +2482,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-09-26",
       "projects": [
-        "PREEMI maternal healthcare"
+        "rec63v4m2GHfgFiqx"
       ]
     },
     {
@@ -2499,7 +2499,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2023-09-04",
       "projects": [
-        "PREEMI maternal healthcare"
+        "rec63v4m2GHfgFiqx"
       ]
     },
     {
@@ -2546,7 +2546,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-10-27",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -2593,7 +2593,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2025-06-01",
       "projects": [
-        "Plan Generación Conocimiento"
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -2610,7 +2610,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-02-02",
       "projects": [
-        "Plan Generación Conocimiento"
+        "recLGRNIjxNyx29tF"
       ]
     },
     {
@@ -2627,7 +2627,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-07-08",
       "projects": [
-        "NiDNA CeDD"
+        "rec0B8iVMqENJ33Jb"
       ]
     },
     {
@@ -2644,7 +2644,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-06-15",
       "projects": [
-        "Ersilia Model Hub"
+        "recZXJT8MJzSbYej0"
       ]
     },
     {
@@ -2661,7 +2661,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2022-08-29",
       "projects": [
-        "Severe malaria biomarkers"
+        "recfad2tnmiw0vbeA"
       ]
     },
     {
@@ -2693,7 +2693,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-04-23",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "rec0bS6UOHbvEtMpY"
       ]
     },
     {
@@ -2800,7 +2800,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Private",
       "created": "2024-08-11",
       "projects": [
-        "The Gambia MRC"
+        "recCVskuZ1oHiWUAK"
       ]
     },
     {
@@ -2832,7 +2832,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2023-04-18",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -2850,7 +2850,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2022-12-03",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -2867,7 +2867,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2021-06-23",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -2884,7 +2884,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2024-11-20",
       "projects": [
-        "AI2050 for TB Modelling"
+        "recpB3zKo2FiWQKNn"
       ]
     },
     {
@@ -2901,7 +2901,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-03-20",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -2918,7 +2918,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-03-19",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     },
     {
@@ -2935,7 +2935,7 @@ window.ERSILIA_REPOS = {
       "visibility": "Public",
       "created": "2026-03-05",
       "projects": [
-        "H3D Virtual Screening Cascade"
+        "reciysjMJMmXg91sh"
       ]
     }
   ]
