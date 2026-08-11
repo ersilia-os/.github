@@ -7,6 +7,7 @@ Ersilia Organization Profile.
 | `profile/README.md` | The card rendered on [github.com/ersilia-os](https://github.com/ersilia-os). |
 | `repository-browser/` | A search engine over every repository in the organisation, published to GitHub Pages at **<https://ersilia-os.github.io/.github/>**. See its [own README](repository-browser/README.md). |
 | `.github/workflows/pages.yml` | Deploys `repository-browser/` to Pages on push to `main`. |
+| `.github/workflows/refresh-data.yml` | Pulls the repository data from Airtable daily, commits it **only if it changed**, then redeploys. Uses the org's existing `AIRTABLE_API_KEY` secret. |
 
 > **Note** — nothing in this repository is inherited by other repositories. GitHub only propagates
 > default community health files with specific recognised names (`CONTRIBUTING.md`,

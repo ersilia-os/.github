@@ -187,6 +187,24 @@ No build step and no server needed — open `index.html`. It also works over
 
 ## Refreshing the data
 
+**This happens by itself.** `.github/workflows/refresh-data.yml` runs daily at 05:20 UTC — and on
+demand via *Run workflow* — using the organisation's existing `AIRTABLE_API_KEY` secret. It commits
+`data/repositories.{js,json}` **only when the repository data has actually changed**, then calls the
+Pages workflow to redeploy. The run summary lists what was added, removed or edited.
+
+Two guards, because a scheduled job that quietly does the wrong thing is worse than no job:
+
+- **A changed snapshot date is not a change.** The date is stamped from `--date`, so a plain
+  `git diff` would be dirty every single day and this would land 365 pointless commits a year in the
+  organisation's most visible repository. `scripts/apply_refresh.py` compares only the
+  `repositories` array.
+- **A partial response is refused, not committed.** If Airtable's pagination dies half way the
+  result is a valid-looking file with too few records, which would silently gut the site. Anything
+  below 0.9× the committed count fails the run and leaves the last good data in place — likewise an
+  empty payload, or a `count` that disagrees with the records it ships.
+
+To refresh by hand:
+
 ```bash
 export AIRTABLE_API_KEY=pat...        # PAT with data.records:read on the Ersilia Content base
 python scripts/fetch_repositories.py --date 2026-08-11
@@ -197,6 +215,19 @@ reload; `index.html` never needs rebuilding for a data refresh.
 
 The snapshot date is passed in rather than read from the clock, so a run is reproducible — the
 same convention as the other scripts in the Ersilia skills repos.
+
+### Why the page does not read Airtable live
+
+Tested, not assumed — and it is not possible. The endpoint an Airtable shared view uses returns
+**`access-control-allow-origin: https://airtable.com`**, pinned to Airtable's own origin and
+unchanged even when the request declares `Origin: https://ersilia-os.github.io`. No amount of page
+code works around that.
+
+A public shared view is also a poor machine interface for CI: its data endpoints need a **signed
+`accessPolicy` that expires** (a live one was valid for 16 days) and are undocumented —
+`readSharedViewData` returned 401 server-side even with session cookies, and `downloadCsv` returned
+`INVALID_MODEL_ID` on every path tried. The documented REST API with the token held in Actions is
+the stable choice, and that way the token never reaches a browser.
 
 ### Private repositories
 

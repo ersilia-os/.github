@@ -1,0 +1,82 @@
+# Refreshes repository-browser/data/ from Airtable once a day.
+#
+# Why the official API and not the public shared view: the shared view's data
+# endpoints require a SIGNED accessPolicy that expires (a live one was valid for
+# 16 days), pin CORS to https://airtable.com, and are undocumented. The REST API
+# is documented and stable, and the token stays here in Actions — it never reaches
+# a browser.
+#
+# Requires one repository secret: AIRTABLE_API_KEY, a personal access token with
+# data.records:read on the Ersilia Content base (app1iYv78K6xbHkmL).
+name: Refresh data from Airtable
+
+on:
+  schedule:
+    # 05:20 UTC — after the nightly cron that populates the Airtable table.
+    # Deliberately not on the hour: scheduled runs bunch up at :00 and get delayed.
+    - cron: "20 5 * * *"
+  workflow_dispatch:
+
+# Never let two refreshes race for the same commit.
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.apply.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Require the secret
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+        run: |
+          if [ -z "$AIRTABLE_API_KEY" ]; then
+            echo "::error::AIRTABLE_API_KEY is not set. Add a repository secret holding an" \
+                 "Airtable personal access token with data.records:read on app1iYv78K6xbHkmL."
+            exit 1
+          fi
+
+      - name: Fetch into a staging directory
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/staged"
+          python repository-browser/scripts/fetch_repositories.py \
+            --date "$(date -u +%F)" \
+            --out-dir "$RUNNER_TEMP/staged"
+
+      # Refuses a truncated response, and treats a changed snapshot date alone as
+      # no change — otherwise this job would commit every single day forever.
+      - name: Apply only if the data actually changed
+        id: apply
+        run: |
+          python repository-browser/scripts/apply_refresh.py \
+            --staged "$RUNNER_TEMP/staged" \
+            --dest   repository-browser/data
+
+      - name: Commit
+        if: steps.apply.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add repository-browser/data
+          git commit -m "Refresh repository data from Airtable ($(date -u +%F))"
+          git push
+
+  # The commit above is made with GITHUB_TOKEN, and GitHub deliberately does not
+  # let such a commit trigger other workflows — so pages.yml would never fire.
+  # Calling it directly is the fix; no extra token needed.
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.changed == 'true'
+    uses: ./.github/workflows/pages.yml

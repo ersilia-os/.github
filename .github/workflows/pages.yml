@@ -19,6 +19,9 @@ on:
       - "repository-browser/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
+  # refresh-data.yml calls this after committing new data. It has to, because a
+  # commit made with GITHUB_TOKEN cannot trigger the `push` event above.
+  workflow_call:
 
 permissions:
   contents: read
