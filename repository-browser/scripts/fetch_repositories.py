@@ -38,6 +38,10 @@ from pathlib import Path
 
 BASE_ID = "app1iYv78K6xbHkmL"  # Ersilia Content
 TABLE_ID = "tbluZtI3W9pseCSPH"  # Repositories
+# Linked-record fields come back from the REST API as record IDs, so the linked
+# table has to be fetched to resolve them to the names people recognise.
+PROJECTS_TABLE_ID = "tblQlxprqUmjHxrmF"        # Projects
+PROJECTS_NAME_FIELD = "fldz4ZIpM6OUxwTkn"      # its primary field, "Name"
 API_ROOT = "https://api.airtable.com/v0"
 
 # Airtable field IDs → the keys the page uses. Field IDs are stable across
@@ -55,14 +59,15 @@ FIELDS = {
 }
 
 LIST_KEYS = ("status", "type", "projects")
+RECORD_ID_RE = re.compile(r"^rec[A-Za-z0-9]{14}$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
-def fetch_page(token: str, offset: str | None) -> dict:
+def fetch_page(token: str, table_id: str, offset: str | None) -> dict:
     params = {"pageSize": "100", "returnFieldsByFieldId": "true"}
     if offset:
         params["offset"] = offset
-    url = f"{API_ROOT}/{BASE_ID}/{TABLE_ID}?{urllib.parse.urlencode(params)}"
+    url = f"{API_ROOT}/{BASE_ID}/{table_id}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
     try:
         with urllib.request.urlopen(req, timeout=60) as resp:
@@ -72,34 +77,60 @@ def fetch_page(token: str, offset: str | None) -> dict:
         raise SystemExit(f"Airtable returned {exc.code}: {body}") from exc
 
 
-def fetch_all(token: str) -> list[dict]:
+def fetch_all(token: str, table_id: str = TABLE_ID) -> list[dict]:
     records: list[dict] = []
     offset = None
     while True:
-        page = fetch_page(token, offset)
+        page = fetch_page(token, table_id, offset)
         records.extend(page.get("records", []))
         offset = page.get("offset")
         if not offset:
             return records
 
 
-def normalise(record: dict) -> dict:
+def link_names(token: str) -> dict[str, str]:
+    """Record id -> display name for the Projects table.
+
+    The REST API returns a linked-record cell as a list of record IDs
+    (`recTJG9wk4nf0YB2t`), never the display value, so the linked table has to be
+    read separately. Skipping this is what once shipped a Project column full of
+    record IDs — see the regression guard in apply_refresh.py.
+    """
+    out: dict[str, str] = {}
+    for rec in fetch_all(token, PROJECTS_TABLE_ID):
+        name = rec.get("fields", {}).get(PROJECTS_NAME_FIELD)
+        if name:
+            out[rec["id"]] = name
+    return out
+
+
+def normalise(record: dict, links: dict[str, str] | None = None) -> dict:
     """Flatten one Airtable record to the page's shape.
 
-    Multi-selects and linked records come back either as plain strings (the REST
-    API) or as {id, name} objects (the MCP connector); accept both. Missing cells
-    are omitted by Airtable entirely, so every key gets an explicit empty default
-    — the page must never see `undefined`.
+    Multi-selects and linked records come back either as plain strings or record
+    IDs (the REST API) or as {id, name} objects (the MCP connector); accept all
+    three. Missing cells are omitted by Airtable entirely, so every key gets an
+    explicit empty default — the page must never see `undefined`.
     """
+    links = links or {}
     raw = record.get("fields", {})
     out: dict[str, object] = {key: ([] if key in LIST_KEYS else "") for key in FIELDS.values()}
+
+    def value_of(item: object) -> str:
+        if isinstance(item, dict):            # MCP connector shape
+            return item.get("name", "")
+        text = str(item)
+        # A record id only ever appears for a linked field; select options cannot
+        # collide with the pattern.
+        return links.get(text, text) if RECORD_ID_RE.match(text) else text
+
     for field_id, key in FIELDS.items():
         if field_id not in raw:
             continue
         value = raw[field_id]
         if key in LIST_KEYS:
             items = value if isinstance(value, list) else [value]
-            out[key] = [i.get("name", "") if isinstance(i, dict) else str(i) for i in items if i]
+            out[key] = [value_of(i) for i in items if i]
         elif isinstance(value, dict):  # single select as an object
             out[key] = value.get("name", "")
         else:
@@ -107,8 +138,9 @@ def normalise(record: dict) -> dict:
     return out
 
 
-def build_payload(records: list[dict], snapshot: str, exclude_private: bool) -> dict:
-    repos = [normalise(r) for r in records]
+def build_payload(records: list[dict], snapshot: str, exclude_private: bool,
+                  links: dict[str, str] | None = None) -> dict:
+    repos = [normalise(r, links) for r in records]
     repos = [r for r in repos if r["name"]]
     if exclude_private:
         repos = [r for r in repos if r["visibility"] != "Private"]
@@ -164,7 +196,7 @@ def main(argv: list[str] | None = None) -> int:
         p.error("set AIRTABLE_API_KEY (a personal access token with data.records:read on the base)")
 
     records = fetch_all(token)
-    payload = build_payload(records, args.date, args.exclude_private)
+    payload = build_payload(records, args.date, args.exclude_private, link_names(token))
     write_outputs(payload, Path(args.out_dir).expanduser().resolve())
 
     private = sum(1 for r in payload["repositories"] if r["visibility"] == "Private")

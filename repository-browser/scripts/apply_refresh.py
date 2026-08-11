@@ -26,9 +26,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
+
+RECORD_ID_RE = re.compile(r"^rec[A-Za-z0-9]{14}$")
 
 
 def load(path: Path) -> dict:
@@ -73,6 +76,19 @@ def main(argv: list[str] | None = None) -> int:
         sys.exit("REFUSED: the fetched payload has no repositories")
     if new.get("count") != len(new_repos):
         sys.exit(f"REFUSED: count says {new.get('count')} but there are {len(new_repos)} records")
+
+    # A field-level regression the count check cannot see. The REST API returns
+    # linked records as record IDs, and a fetch that forgets to resolve them
+    # produces a full-size, valid-looking payload whose Project column reads
+    # `recTJG9wk4nf0YB2t`. That shipped once; it does not ship again.
+    unresolved = [r["name"] for r in new_repos
+                  if any(RECORD_ID_RE.match(str(p)) for p in r.get("projects") or [])]
+    if unresolved:
+        sys.exit(
+            f"REFUSED: {len(unresolved)} records have unresolved linked-record IDs in "
+            f"'projects' (e.g. {unresolved[0]}). fetch_repositories.py must resolve them to "
+            f"names via link_names()."
+        )
 
     old_repos = old.get("repositories") or []
     if old_repos and len(new_repos) < len(old_repos) * args.min_ratio:

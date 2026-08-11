@@ -18,9 +18,9 @@ date and the URL. It follows the `↑`/`↓` selection too, so it is not a mouse
 replaces the native `title` tooltip entirely — there are no `title` attributes on rows, because a
 browser tooltip would surface on top of the card a second later.
 
-Click any column header to sort by it, click again to reverse. With no query the table is newest
-first; with a query it is ranked by relevance, and the toolbar offers a way back to that ranking
-if you have sorted by a column.
+Click any column header to sort by it, click again to reverse. With no query the table is
+alphabetical by repository name, so it reads as a browsable index; with a query it is ranked by
+relevance, and the toolbar offers a way back to that ranking if you have sorted by a column.
 
 Clicking a row opens the repository on GitHub. Private repositories are the exception: they are
 fully searchable and carry a `private` badge, but are not linked, since the URL 404s for anyone

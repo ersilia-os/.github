@@ -1150,9 +1150,9 @@ dialog.modal .close { position: absolute; top: var(--s4); right: var(--s4); z-in
   }
 
   /* ------------------------------------------------------------------ state
-     sort === null means "automatic": relevance while there is a query, newest
-     otherwise. Clicking a column header sets it explicitly; the toolbar then
-     offers a way back to the ranked order. */
+     sort === null means "automatic": relevance while there is a query,
+     alphabetical otherwise. Clicking a column header sets it explicitly; the
+     toolbar then offers a way back to the ranked order. */
   var state = { raw: "", sort: null, dir: 1, sel: -1, list: [], enabled: null };
 
   function defaultEnabled() {
@@ -1200,7 +1200,9 @@ dialog.modal .close { position: absolute; top: var(--s4); right: var(--s4); z-in
 
   function effectiveSort(hasQuery) {
     if (state.sort) { return { col: state.sort, dir: state.dir }; }
-    return hasQuery ? { col: "relevance", dir: -1 } : { col: "created", dir: -1 };
+    /* No query: alphabetical, so the table is a predictable index you can scan
+       for a name. Relevance only means something once there is something to rank. */
+    return hasQuery ? { col: "relevance", dir: -1 } : { col: "name", dir: 1 };
   }
 
   function search() {
