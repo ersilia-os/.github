@@ -277,8 +277,12 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
            clip: rect(0 0 0 0); white-space: nowrap; }
 /* Fixed layout with declared column widths: with auto layout the longest slug
-   and the widest title fight over the space and push Created off the edge. */
-#hits { width: 100%; border-collapse: collapse; table-layout: fixed; }
+   and the widest title fight over the space and push Created off the edge.
+   border-collapse is SEPARATE rather than collapse on purpose: a collapsed-border
+   table ignores border-radius on its cells, and the corner cells are the only
+   thing that can round this table, since .tablewrap must not clip. Cells declare
+   a bottom border only, so nothing doubles up once borders stop merging. */
+#hits { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 /* Widths sum to 100 and are sized to their content: Created must fit a whole
    ISO date in mono, and Type/Status must fit their widest badge plus a "+1". */
 #hits col.w-repo { width: 28%; }
@@ -293,6 +297,11 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
                  font-weight: 500; letter-spacing: .02em; color: var(--muted);
                  text-align: left; white-space: nowrap; padding: 0;
                  border-bottom: 1px solid var(--border); }
+/* The wrapper is rounded but cannot clip, so its opaque sticky header cells were
+   painting square white corners over the radius. The corner cells carry the
+   radius themselves; 1px less than the wrapper's, to sit inside its border. */
+#hits thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+#hits thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
 #hits thead th button { width: 100%; font: inherit; letter-spacing: inherit;
                         color: inherit; background: none; border: none;
                         border-radius: 0; text-align: inherit;
@@ -331,8 +340,8 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
    the container — see the overflow/sticky note above. The last row also drops
    its rule so it does not double with the frame's own border. */
 #hits tbody tr.hit:last-child > td { border-bottom: none; }
-#hits tbody tr.hit:last-child > td:first-child { border-bottom-left-radius: var(--radius); }
-#hits tbody tr.hit:last-child > td:last-child { border-bottom-right-radius: var(--radius); }
+#hits tbody tr.hit:last-child > td:first-child { border-bottom-left-radius: calc(var(--radius) - 1px); }
+#hits tbody tr.hit:last-child > td:last-child { border-bottom-right-radius: calc(var(--radius) - 1px); }
 
 /* The identifier leads: it is what you searched for and what you will type
    again. The title sits beside it, same size, lighter, greyer. */

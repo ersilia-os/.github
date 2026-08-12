@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <meta name="generator" content="ersilia html-formatting skill">
 <title>Search repositories in the Ersilia ecosystem</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Ccircle%20cx='16'%20cy='16'%20r='15'%20fill='%2350285A'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23fff'%20stroke-width='2.6'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='3.6'%20fill='%23D8412F'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Cg%20transform='rotate(45%2016%2016)'%20fill='none'%20stroke='%2350285A'%20stroke-width='1.2'%20stroke-linecap='round'%3E%3Cpath%20d='M5.5%205.5V26.5M9.7%205.5V26.5M13.9%205.5V26.5M18.1%205.5V26.5M22.3%205.5V26.5M26.5%205.5V26.5'/%3E%3Cpath%20d='M5.5%205.5H26.5M5.5%209.7H26.5M5.5%2013.9H26.5M5.5%2018.1H26.5M5.5%2022.3H26.5M5.5%2026.5H26.5'/%3E%3C/g%3E%3C/svg%3E">
 <style>
 /* ===========================================================================
    ersilia.css — the canonical Ersilia HTML house style.
@@ -600,8 +600,12 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
            clip: rect(0 0 0 0); white-space: nowrap; }
 /* Fixed layout with declared column widths: with auto layout the longest slug
-   and the widest title fight over the space and push Created off the edge. */
-#hits { width: 100%; border-collapse: collapse; table-layout: fixed; }
+   and the widest title fight over the space and push Created off the edge.
+   border-collapse is SEPARATE rather than collapse on purpose: a collapsed-border
+   table ignores border-radius on its cells, and the corner cells are the only
+   thing that can round this table, since .tablewrap must not clip. Cells declare
+   a bottom border only, so nothing doubles up once borders stop merging. */
+#hits { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 /* Widths sum to 100 and are sized to their content: Created must fit a whole
    ISO date in mono, and Type/Status must fit their widest badge plus a "+1". */
 #hits col.w-repo { width: 28%; }
@@ -616,6 +620,11 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
                  font-weight: 500; letter-spacing: .02em; color: var(--muted);
                  text-align: left; white-space: nowrap; padding: 0;
                  border-bottom: 1px solid var(--border); }
+/* The wrapper is rounded but cannot clip, so its opaque sticky header cells were
+   painting square white corners over the radius. The corner cells carry the
+   radius themselves; 1px less than the wrapper's, to sit inside its border. */
+#hits thead th:first-child { border-top-left-radius: calc(var(--radius) - 1px); }
+#hits thead th:last-child { border-top-right-radius: calc(var(--radius) - 1px); }
 #hits thead th button { width: 100%; font: inherit; letter-spacing: inherit;
                         color: inherit; background: none; border: none;
                         border-radius: 0; text-align: inherit;
@@ -654,8 +663,8 @@ dialog.modal h2, dialog.modal h3 { font-weight: 500; }
    the container — see the overflow/sticky note above. The last row also drops
    its rule so it does not double with the frame's own border. */
 #hits tbody tr.hit:last-child > td { border-bottom: none; }
-#hits tbody tr.hit:last-child > td:first-child { border-bottom-left-radius: var(--radius); }
-#hits tbody tr.hit:last-child > td:last-child { border-bottom-right-radius: var(--radius); }
+#hits tbody tr.hit:last-child > td:first-child { border-bottom-left-radius: calc(var(--radius) - 1px); }
+#hits tbody tr.hit:last-child > td:last-child { border-bottom-right-radius: calc(var(--radius) - 1px); }
 
 /* The identifier leads: it is what you searched for and what you will type
    again. The title sits beside it, same size, lighter, greyer. */
