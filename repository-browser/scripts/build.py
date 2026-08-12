@@ -72,6 +72,10 @@ def main(argv: list[str] | None = None) -> int:
         "--out", args.out,
         "--title", TITLE,
         "--source-url", SOURCE_URL,
+        # Pinned rather than left to the skill's title-derived default: this page
+        # is the organisation's front door, so its tab keeps the identity colour
+        # even if the title is later reworded.
+        "--favicon", "plum",
     ]
     try:
         runpy.run_path(str(theme), run_name="__main__")
