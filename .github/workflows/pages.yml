@@ -51,6 +51,14 @@ jobs:
           grep -q 'window.ERSILIA_REPOS' repository-browser/data/repositories.js
           grep -q 'src="data/repositories.js"' repository-browser/index.html
 
+      - name: Fail if the social preview is missing
+        # og:image is what LinkedIn and Slack show for a shared link. A rebuild that
+        # drops the tags, or a deploy without the PNG, ships a bare preview card —
+        # and nobody notices until the link is already posted.
+        run: |
+          test -f repository-browser/og-image.png
+          grep -q 'property="og:image"' repository-browser/index.html
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3

@@ -251,6 +251,7 @@ That is a data-level exclusion, not a display toggle — the private records nev
 ```bash
 python scripts/build.py              # index.html
 python scripts/build.py --artifact   # + dist/artifact.html
+python scripts/build.py --shot       # + og-image.png (needs Chrome)
 ```
 
 `build.py` runs `apply_theme.py` from the `html-formatting` skill in retrofit mode: it inlines the
@@ -278,6 +279,16 @@ Same-origin `<script src>` is correct for a hosted site and is *not* a self-cont
 under the skill's rules — that check targets off-document hosts. The Artifact build
 (`dist/artifact.html`) inlines the data instead, because Artifacts block all external hosts via
 CSP and have no sibling files.
+
+**The social preview is a screenshot of the page.** Shared on LinkedIn or in Slack, the site
+shows `og-image.png` — a 1200×630 @2× capture of the top of the page, taken by the skill's
+`make_og_image.py` at `--zoom 1.4` (zoomed because the card is rendered small, where 1:1 table
+text is unreadable). The Open Graph URLs in `build.py` are absolute and hard-coded: a crawler
+fetches `og:image` from its own servers, so a relative path yields no card at all. Regenerate with
+`build.py --shot` when the page's **design** changes — not on a data refresh, which is why the
+capture is opt-in and the nightly workflow (no browser in CI) never runs it. After deploying,
+force LinkedIn to re-scrape at <https://www.linkedin.com/post-inspector/>; it caches a preview for
+about a week.
 
 **Status is the only categorical colour, and it is semantic** — planned in cobalt, active in
 periwinkle, completed in green, idle in amber, and the two deliberate endings (archived,
@@ -333,12 +344,13 @@ python ~/.claude/skills/html-formatting/scripts/check_html.py index.html --date 
 
 ```
 index.html                    the search engine (generated — edit src/, not this)
+og-image.png                  social preview card (generated — build.py --shot)
 src/index.src.html            page source: markup, styles, search logic
 data/repositories.js          window.ERSILIA_REPOS — what the page loads
 data/repositories.json        the same payload, for machine consumers
 dist/artifact.html            single-file build for publishing as a Claude Artifact
 scripts/fetch_repositories.py Airtable → data files
-scripts/build.py              src/ → index.html (and --artifact)
+scripts/build.py              src/ → index.html (and --artifact, --shot)
 ```
 
 ## Status of the refresh script
