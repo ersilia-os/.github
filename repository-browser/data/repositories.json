@@ -1,6 +1,6 @@
 {
-  "snapshot": "2026-09-13",
-  "count": 181,
+  "snapshot": "2026-09-30",
+  "count": 186,
   "source": {
     "base": "Ersilia Content",
     "baseId": "app1iYv78K6xbHkmL",
@@ -360,21 +360,6 @@
       ]
     },
     {
-      "name": "chem-icl",
-      "title": "In-Context Learning for Chemistry",
-      "description": "Uses TabPFN and Isaura for in-context learning on molecular property prediction tasks.",
-      "url": "https://github.com/ersilia-os/chem-icl",
-      "status": [
-        "In progress"
-      ],
-      "type": [
-        "Package"
-      ],
-      "visibility": "Private",
-      "created": "2026-06-03",
-      "projects": []
-    },
-    {
       "name": "chem-sampler",
       "title": "ChemSampler: Chemical Space Sampling",
       "description": "A Python API to sample the chemical space around a seed molecule using generative models from the Ersilia Model Hub.",
@@ -519,6 +504,21 @@
       ],
       "visibility": "Public",
       "created": "2025-11-04",
+      "projects": []
+    },
+    {
+      "name": "chemicl",
+      "title": "In-Context Learning for Chemistry",
+      "description": "Uses TabPFN and Isaura for in-context learning on molecular property prediction tasks.",
+      "url": "https://github.com/ersilia-os/chemicl",
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Package"
+      ],
+      "visibility": "Private",
+      "created": "2026-06-03",
       "projects": []
     },
     {
@@ -1619,6 +1619,17 @@
       ]
     },
     {
+      "name": "gradi-ai-data-working-group",
+      "title": "",
+      "description": "Analyses related to the Gr-ADI AI and Data Working Group",
+      "url": "https://github.com/ersilia-os/gradi-ai-data-working-group",
+      "status": [],
+      "type": [],
+      "visibility": "Private",
+      "created": "2026-08-14",
+      "projects": []
+    },
+    {
       "name": "gradi-target-prioritization",
       "title": "Gr-ADI Target Prioritization for Gram-Negative Bacteria",
       "description": "Computational target selection for the Gr-ADI project on BacPROTAC antibacterial discovery, led by Prof. Erick Strauss.",
@@ -1933,6 +1944,17 @@
       ]
     },
     {
+      "name": "lazy-chemvis-paper",
+      "title": "",
+      "description": "This repository contains the scripts for generating all the figures and analysis of the lazy-chemivs paper",
+      "url": "https://github.com/ersilia-os/lazy-chemvis-paper",
+      "status": [],
+      "type": [],
+      "visibility": "Public",
+      "created": "2026-08-18",
+      "projects": []
+    },
+    {
       "name": "lazy-qsar",
       "title": "LazyQSAR: Fast QSAR Model Building",
       "description": "A Python library for building supervised QSAR models quickly, with minimal configuration.",
@@ -2011,6 +2033,17 @@
         "Ersilia Model Hub",
         "Splunk data store"
       ]
+    },
+    {
+      "name": "model-launcher",
+      "title": "",
+      "description": "Launch ersilia models on a Slurm managed cluster",
+      "url": "https://github.com/ersilia-os/model-launcher",
+      "status": [],
+      "type": [],
+      "visibility": "Public",
+      "created": "2026-09-21",
+      "projects": []
     },
     {
       "name": "model-validations",
@@ -2092,10 +2125,10 @@
       ]
     },
     {
-      "name": "mtb-targeted-protein-degradation",
+      "name": "mtb-trna-synthetases-screening",
       "title": "Targeted Protein Degradation in Mycobacterium tuberculosis",
       "description": "Discovery of potential BacPROTAC degraders for essential tRNA synthetases in Mycobacterium tuberculosis.",
-      "url": "https://github.com/ersilia-os/mtb-targeted-protein-degradation",
+      "url": "https://github.com/ersilia-os/mtb-trna-synthetases-screening",
       "status": [
         "In progress"
       ],
@@ -2416,6 +2449,17 @@
       "projects": []
     },
     {
+      "name": "pathogen-pocketome",
+      "title": "",
+      "description": "Early-stage exploration of a pathogen pocketome: pocket mapping across priority pathogens for future docking, surrogate, and generative modelling.",
+      "url": "https://github.com/ersilia-os/pathogen-pocketome",
+      "status": [],
+      "type": [],
+      "visibility": "Public",
+      "created": "2026-09-15",
+      "projects": []
+    },
+    {
       "name": "pharmacogx-app",
       "title": "Pharmacogenomics Predictions Browser for Africa",
       "description": "An app to browse AI-based pharmacogenomics predictions relevant to African populations, with the H3D Centre.",
@@ -2563,10 +2607,10 @@
       "projects": []
     },
     {
-      "name": "rafiki-workshop",
+      "name": "rafiki-workshop-2026",
       "title": "RAFIKI workshop 2026",
       "description": "Materials for the 3-hours RAFIKI workshop delivered in Nairobi on September 2026",
-      "url": "https://github.com/ersilia-os/rafiki-workshop",
+      "url": "https://github.com/ersilia-os/rafiki-workshop-2026",
       "status": [
         "Completed"
       ],
@@ -2678,21 +2722,6 @@
       ]
     },
     {
-      "name": "slack",
-      "title": "Standup Shuffle Slack Bot",
-      "description": "A Slack slash-command bot that randomly orders the team for daily standups.",
-      "url": "https://github.com/ersilia-os/slack",
-      "status": [
-        "Discontinued"
-      ],
-      "type": [
-        "Package"
-      ],
-      "visibility": "Private",
-      "created": "2023-06-11",
-      "projects": []
-    },
-    {
       "name": "smiles-to-3d",
       "title": "SMILES to 3D Conformers",
       "description": "Converts lists of SMILES into 3D conformers efficiently using CDPKit.",
@@ -2740,6 +2769,17 @@
       "projects": []
     },
     {
+      "name": "tcolf-chemical-libraries",
+      "title": "",
+      "description": "Creating chemical libraries for TCOLF screening",
+      "url": "https://github.com/ersilia-os/tcolf-chemical-libraries",
+      "status": [],
+      "type": [],
+      "visibility": "Private",
+      "created": "2026-09-28",
+      "projects": []
+    },
+    {
       "name": "tmap-chemistry",
       "title": "Chemical Space Visualization with TMAP",
       "description": "A lightweight wrapper around the TMAP library to visualize chemical space as tree maps.",
@@ -2782,6 +2822,17 @@
       ],
       "visibility": "Public",
       "created": "2025-07-08",
+      "projects": []
+    },
+    {
+      "name": "ub-cedd-projects-workshop",
+      "title": "",
+      "description": "Project-driven workshop at the UB-CeDD centre in Buea, Cameroon",
+      "url": "https://github.com/ersilia-os/ub-cedd-projects-workshop",
+      "status": [],
+      "type": [],
+      "visibility": "Public",
+      "created": "2026-09-23",
       "projects": []
     },
     {
