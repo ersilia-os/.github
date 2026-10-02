@@ -1,6 +1,6 @@
 {
-  "snapshot": "2026-09-30",
-  "count": 186,
+  "snapshot": "2026-10-02",
+  "count": 187,
   "source": {
     "base": "Ersilia Content",
     "baseId": "app1iYv78K6xbHkmL",
@@ -2076,6 +2076,17 @@
       "projects": [
         "RES-BSC Precalculations"
       ]
+    },
+    {
+      "name": "molecule-grids",
+      "title": "",
+      "description": "Draw grids of small molecules for slide decs and publications",
+      "url": "https://github.com/ersilia-os/molecule-grids",
+      "status": [],
+      "type": [],
+      "visibility": "Public",
+      "created": "2026-09-30",
+      "projects": []
     },
     {
       "name": "morgan-fingerprint-embedding",
