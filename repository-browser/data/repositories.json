@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-10-30",
+  "snapshot": "2026-11-05",
   "count": 188,
   "source": {
     "base": "Ersilia Content",
@@ -2247,7 +2247,7 @@
     {
       "name": "olinda",
       "title": "Olinda: Chemistry Model Distillation",
-      "description": "Distillation of chemistry models into compact XGBoost students from fingerprints or feature tables, with built-in tuning and validation.",
+      "description": "Distillation of slow chemistry models into one fast, self-describing ONNX file: a compact gradient-boosting student learns the teacher over a 1.36M-compound reference library, with optional blending of real hard labels and built-in validation.",
       "url": "https://github.com/ersilia-os/olinda",
       "status": [
         "In progress"
