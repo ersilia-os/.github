@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-11-05",
+  "snapshot": "2026-11-10",
   "count": 188,
   "source": {
     "base": "Ersilia Content",
@@ -23,7 +23,7 @@
       "visibility": "Public",
       "created": "2024-06-12",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "Scaffold hopping from Natural Products"
       ]
     },
     {
@@ -356,7 +356,7 @@
       "visibility": "Public",
       "created": "2021-01-02",
       "projects": [
-        "CHAMPS diagrams"
+        "Child mortality identification as part of CHAMPS"
       ]
     },
     {
@@ -373,8 +373,8 @@
       "visibility": "Public",
       "created": "2024-04-09",
       "projects": [
-        "Scaffold Hopping from Natural Products",
-        "Plan Generación Conocimiento"
+        "Scaffold hopping from Natural Products",
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -391,7 +391,7 @@
       "visibility": "Public",
       "created": "2023-11-17",
       "projects": [
-        "Plan Generación Conocimiento"
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -425,7 +425,7 @@
       "visibility": "Public",
       "created": "2025-09-15",
       "projects": [
-        "Plan Generación Conocimiento"
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -535,7 +535,7 @@
       "visibility": "Public",
       "created": "2023-01-13",
       "projects": [
-        "ChemPFN"
+        "Fast tabular models (ChemPFN)"
       ]
     },
     {
@@ -552,7 +552,7 @@
       "visibility": "Private",
       "created": "2024-02-14",
       "projects": [
-        "ChemPFN"
+        "Fast tabular models (ChemPFN)"
       ]
     },
     {
@@ -669,7 +669,7 @@
       "visibility": "Public",
       "created": "2024-08-12",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "Targeted protein degradation for tuberculosis (GC-ADDA4TB)"
       ]
     },
     {
@@ -748,7 +748,7 @@
       "visibility": "Public",
       "created": "2025-07-15",
       "projects": [
-        "Targeted protein degradation for tuberculosis",
+        "Targeted protein degradation for tuberculosis (GC-ADDA4TB)",
         "Gram-negative antibiotics discovery with GARDP"
       ]
     },
@@ -910,7 +910,7 @@
       "visibility": "Public",
       "created": "2026-04-16",
       "projects": [
-        "Plan Generación Conocimiento"
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -1006,7 +1006,7 @@
       "visibility": "Public",
       "created": "2024-09-25",
       "projects": [
-        "Mozilla Builders",
+        "Mozilla Builders Accelerator",
         "Splunk data store"
       ]
     },
@@ -1331,7 +1331,7 @@
       "visibility": "Public",
       "created": "2026-03-06",
       "projects": [
-        "Ersilia skills"
+        "Ersilia agentic skills"
       ]
     },
     {
@@ -1348,7 +1348,7 @@
       "visibility": "Private",
       "created": "2026-05-07",
       "projects": [
-        "Ersilia skills"
+        "Ersilia agentic skills"
       ]
     },
     {
@@ -1619,7 +1619,7 @@
       "visibility": "Public",
       "created": "2026-01-08",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "Targeted protein degradation for tuberculosis (GC-ADDA4TB)"
       ]
     },
     {
@@ -1678,7 +1678,7 @@
       "visibility": "Public",
       "created": "2021-12-21",
       "projects": [
-        "RES-BSC Precalculations"
+        "Scoping of large scale precalculations at the BSC"
       ]
     },
     {
@@ -1712,7 +1712,7 @@
       "visibility": "Private",
       "created": "2025-11-04",
       "projects": [
-        "H3D Mtb Bioactivity"
+        "Antituberculosis hit identification with the H3D Centre"
       ]
     },
     {
@@ -1877,7 +1877,7 @@
       "visibility": "Private",
       "created": "2025-10-19",
       "projects": [
-        "NPs as schistosoma drugs"
+        "Natural products as schistosoma drugs"
       ]
     },
     {
@@ -1894,7 +1894,7 @@
       "visibility": "Public",
       "created": "2026-01-16",
       "projects": [
-        "PQZ signature reversal"
+        "Praziquantel signature reversal"
       ]
     },
     {
@@ -2087,7 +2087,7 @@
       "visibility": "Public",
       "created": "2021-11-20",
       "projects": [
-        "RES-BSC Precalculations"
+        "Scoping of large scale precalculations at the BSC"
       ]
     },
     {
@@ -2145,7 +2145,7 @@
       "visibility": "Public",
       "created": "2025-11-26",
       "projects": [
-        "Collaboration Fund BMGF"
+        "Mtb target profiling at scale with DaltonTx"
       ]
     },
     {
@@ -2162,7 +2162,7 @@
       "visibility": "Public",
       "created": "2024-11-21",
       "projects": [
-        "Targeted protein degradation for tuberculosis"
+        "Targeted protein degradation for tuberculosis (GC-ADDA4TB)"
       ]
     },
     {
@@ -2241,7 +2241,7 @@
       "visibility": "Private",
       "created": "2023-11-05",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "Scaffold hopping from Natural Products"
       ]
     },
     {
@@ -2497,7 +2497,7 @@
       "visibility": "Public",
       "created": "2024-05-16",
       "projects": [
-        "African pharmacogenomics"
+        "African pharmacogenomics (GRADIENT)"
       ]
     },
     {
@@ -2514,7 +2514,7 @@
       "visibility": "Public",
       "created": "2023-05-30",
       "projects": [
-        "African pharmacogenomics"
+        "African pharmacogenomics (GRADIENT)"
       ]
     },
     {
@@ -2531,7 +2531,7 @@
       "visibility": "Public",
       "created": "2023-01-24",
       "projects": [
-        "African pharmacogenomics"
+        "African pharmacogenomics (GRADIENT)"
       ]
     },
     {
@@ -2674,7 +2674,7 @@
       "visibility": "Public",
       "created": "2025-06-01",
       "projects": [
-        "Plan Generación Conocimiento"
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -2691,7 +2691,7 @@
       "visibility": "Public",
       "created": "2026-02-02",
       "projects": [
-        "Plan Generación Conocimiento"
+        "A public resource for antibiotic drug discovery"
       ]
     },
     {
@@ -2759,7 +2759,7 @@
       "visibility": "Public",
       "created": "2024-04-23",
       "projects": [
-        "Scaffold Hopping from Natural Products"
+        "Scaffold hopping from Natural Products"
       ]
     },
     {
@@ -2791,7 +2791,7 @@
       "visibility": "Private",
       "created": "2026-06-02",
       "projects": [
-        "TCOLF Antimalarials"
+        "Antimalarial hit identification at TCOLF"
       ]
     },
     {
@@ -2804,7 +2804,7 @@
       "visibility": "Private",
       "created": "2026-09-28",
       "projects": [
-        "TCOLF Antimalarials"
+        "Antimalarial hit identification at TCOLF"
       ]
     },
     {
@@ -2892,7 +2892,7 @@
       "visibility": "Private",
       "created": "2024-08-11",
       "projects": [
-        "The Gambia MRC"
+        "Mtb drug response in clinical isolates at the Gambia MRC"
       ]
     },
     {
