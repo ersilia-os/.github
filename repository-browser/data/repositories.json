@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-11-24",
+  "snapshot": "2026-11-25",
   "count": 186,
   "source": {
     "base": "Ersilia Content",
@@ -661,7 +661,7 @@
       "description": "Materials and information for the Ersilia and GDI Data for Good Hackathon.",
       "url": "https://github.com/ersilia-os/d4g-cohort-2024-hackathon-group3",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "Analysis"
@@ -840,8 +840,7 @@
         "In progress"
       ],
       "type": [
-        "Package",
-        "App"
+        "Package"
       ],
       "visibility": "Public",
       "created": "2026-03-19",
@@ -936,7 +935,7 @@
       "description": "A Streamlit-based graphical interface for running Ersilia Model Hub models.",
       "url": "https://github.com/ersilia-os/ersilia-app",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "App"
@@ -1033,7 +1032,7 @@
       "description": "A graphical user interface for the Ersilia Model Hub with a React frontend and Node.js backend, built with Harvard T4SG.",
       "url": "https://github.com/ersilia-os/ersilia-gui",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "App"
@@ -1249,7 +1248,7 @@
       "type": [
         "Package"
       ],
-      "visibility": "Private",
+      "visibility": "Public",
       "created": "2025-10-08",
       "projects": [
         "Ersilia Model Hub"
@@ -1276,7 +1275,7 @@
       "description": "A self-service repository to request predictions on your dataset from Ersilia models via GitHub Actions.",
       "url": "https://github.com/ersilia-os/ersilia-self-service",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "Automation"
@@ -1346,8 +1345,7 @@
         "Archived"
       ],
       "type": [
-        "Analysis",
-        "App"
+        "Analysis"
       ],
       "visibility": "Private",
       "created": "2023-12-08",
@@ -1500,7 +1498,7 @@
       "description": "A simple interaction game created for the Fast Forward Accelerator.",
       "url": "https://github.com/ersilia-os/ffwd-ersilia-game",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "Workshop"
@@ -1597,10 +1595,29 @@
       "title": "",
       "description": "Analyses related to the Gr-ADI AI and Data Working Group",
       "url": "https://github.com/ersilia-os/gradi-ai-data-working-group",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
       "visibility": "Private",
       "created": "2026-08-14",
+      "projects": []
+    },
+    {
+      "name": "gradi-clpp-engaging-ligands",
+      "title": "",
+      "description": "Characterising ClpP Gram-negative binding sites and looking for ClpP-engaging ligands (CELs)",
+      "url": "https://github.com/ersilia-os/gradi-clpp-engaging-ligands",
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
+      "visibility": "Private",
+      "created": "2026-10-29",
       "projects": []
     },
     {
@@ -1716,6 +1733,21 @@
       ],
       "visibility": "Private",
       "created": "2026-05-28",
+      "projects": []
+    },
+    {
+      "name": "h3d-mtb-models-round2",
+      "title": "",
+      "description": "Mtb bioactivity at H3D, Round 2 (private; SIF build only)",
+      "url": "https://github.com/ersilia-os/h3d-mtb-models-round2",
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
+      "visibility": "Private",
+      "created": "2026-10-12",
       "projects": []
     },
     {
@@ -1922,8 +1954,12 @@
       "title": "",
       "description": "This repository contains the scripts for generating all the figures and analysis of the lazy-chemivs paper",
       "url": "https://github.com/ersilia-os/lazy-chemvis-paper",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
       "visibility": "Public",
       "created": "2026-08-18",
       "projects": []
@@ -1948,8 +1984,12 @@
       "title": "",
       "description": "Fast similarity-based identification of small molecules",
       "url": "https://github.com/ersilia-os/lazy-sim",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Package"
+      ],
       "visibility": "Public",
       "created": "2026-10-09",
       "projects": []
@@ -1967,21 +2007,6 @@
       ],
       "visibility": "Private",
       "created": "2025-10-28",
-      "projects": []
-    },
-    {
-      "name": "mmv",
-      "title": "MMV Antimalarial Activity Models",
-      "description": "Modeling of MMV data on Plasmodium falciparum activity and cytotoxicity.",
-      "url": "https://github.com/ersilia-os/mmv",
-      "status": [
-        "Completed"
-      ],
-      "type": [
-        "Analysis"
-      ],
-      "visibility": "Private",
-      "created": "2022-11-16",
       "projects": []
     },
     {
@@ -2022,8 +2047,12 @@
       "title": "",
       "description": "Launch ersilia models on a Slurm managed cluster",
       "url": "https://github.com/ersilia-os/model-launcher",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Package"
+      ],
       "visibility": "Public",
       "created": "2026-09-21",
       "projects": []
@@ -2065,8 +2094,12 @@
       "title": "",
       "description": "Draw grids of small molecules for slide decs and publications",
       "url": "https://github.com/ersilia-os/molecule-grids",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Package"
+      ],
       "visibility": "Public",
       "created": "2026-09-30",
       "projects": []
@@ -2156,7 +2189,7 @@
       "description": "Network mapping of attendees from the 2023 Gates Foundation drug discovery meeting in Nairobi.",
       "url": "https://github.com/ersilia-os/nairobi-meeting-network-mapping-2023",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "Analysis"
@@ -2267,7 +2300,7 @@
       "description": "Notebooks that clean and curate open datasets downloaded from various sources.",
       "url": "https://github.com/ersilia-os/open-data-cleaning",
       "status": [
-        "Idle"
+        "Discontinued"
       ],
       "type": [
         "Analysis"
@@ -2418,7 +2451,7 @@
       "description": "Instructions and structure for Outreachy contributors during Ersilia's internship contribution period.",
       "url": "https://github.com/ersilia-os/outreachy-contributions",
       "status": [
-        "Completed"
+        "Archived"
       ],
       "type": [
         "Workshop"
@@ -2447,8 +2480,12 @@
       "title": "",
       "description": "Early-stage exploration of a pathogen pocketome: pocket mapping across priority pathogens for future docking, surrogate, and generative modelling.",
       "url": "https://github.com/ersilia-os/pathogen-pocketome",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
       "visibility": "Public",
       "created": "2026-09-15",
       "projects": []
@@ -2537,21 +2574,6 @@
       "projects": [
         "PREEMI maternal healthcare"
       ]
-    },
-    {
-      "name": "private-data-cleaning",
-      "title": "Private Data Cleaning",
-      "description": "Cleaning and curation of data shared by collaborators, mirroring the open-data-cleaning structure.",
-      "url": "https://github.com/ersilia-os/private-data-cleaning",
-      "status": [
-        "Completed"
-      ],
-      "type": [
-        "Analysis"
-      ],
-      "visibility": "Private",
-      "created": "2023-07-06",
-      "projects": []
     },
     {
       "name": "pry-etal-kidney-fx",
@@ -2769,8 +2791,12 @@
       "title": "",
       "description": "Creating chemical libraries for TCOLF screening",
       "url": "https://github.com/ersilia-os/tcolf-chemical-libraries",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Analysis"
+      ],
       "visibility": "Private",
       "created": "2026-09-28",
       "projects": [
@@ -2827,8 +2853,12 @@
       "title": "",
       "description": "Project-driven workshop at the UB-CeDD centre in Buea, Cameroon",
       "url": "https://github.com/ersilia-os/ub-cedd-projects-workshop",
-      "status": [],
-      "type": [],
+      "status": [
+        "In progress"
+      ],
+      "type": [
+        "Workshop"
+      ],
       "visibility": "Public",
       "created": "2026-09-23",
       "projects": []
